@@ -441,6 +441,7 @@
     }
     .app-btn.naver i { background: #03c75a; }
     .app-btn.tmap i { background: #ef3e5c; }
+    .app-btn.google i { background: #4285f4; }
 
     /* 장소 사이 대중교통 구간 */
     .seg {
@@ -905,6 +906,15 @@
         googlePhoto: 'Photo from Google',
         examplePhoto: 'Example photo',
         exampleTip: 'A mood photo for this category — not a photo of the places listed below.',
+        linkTitle: 'The map is taking a short break',
+        linkText: 'Lots of travelers visited today, so the map is resting. You can still browse courses and plans — use the Google Maps, Naver Map and TMAP buttons on each place for directions.',
+        linkCourseNote: "Opening hours and transit times aren't available right now. Use the map app buttons on each place to find your way.",
+        foodLink: n => `Find restaurants near ${n}`,
+        cafeLink: n => `Find cafés near ${n}`,
+        planCountLink: (a, f) => `${a} sights · ${f} restaurant & café searches`,
+        nearbyLinkText: (r, c) => `Genie Map can't search nearby right now. Tap a button to see "${c} in ${r}" in a map app.`,
+        searchLinkText: q => `Genie Map can't search right now. Tap a button to search "${q}" in a map app.`,
+        photosOnNaver: '📷 Photos on Naver Map',
         chooseCourse: 'Choose a travel course',
         stops: n => `${n} stops`,
         courseCount: n => n === 1 ? '1 course' : `${n} courses`,
@@ -984,6 +994,15 @@
         googlePhoto: 'Google 제공 사진',
         examplePhoto: '예시 사진',
         exampleTip: '분위기를 보여 주는 예시 사진이에요. 아래 목록에 나온 가게의 실제 사진이 아니에요.',
+        linkTitle: '지도가 잠시 쉬고 있어요',
+        linkText: '오늘 이용자가 많아 지도를 잠시 볼 수 없어요. 코스와 일정은 그대로 볼 수 있고, 장소마다 Google 지도·네이버 지도·티맵 버튼으로 길을 찾을 수 있어요.',
+        linkCourseNote: '지금은 영업시간·대중교통 시간을 볼 수 없어요. 장소마다 지도 앱 버튼으로 길을 찾아보세요.',
+        foodLink: n => `${n} 근처 맛집 찾아보기`,
+        cafeLink: n => `${n} 근처 카페 찾아보기`,
+        planCountLink: (a, f) => `여행지 ${a}곳 · 맛집·카페 찾기 ${f}번`,
+        nearbyLinkText: (r, c) => `지금은 지니맵에서 주변 장소를 찾을 수 없어요. 버튼을 누르면 지도 앱에서 "${r} ${c}" 검색 결과를 볼 수 있어요.`,
+        searchLinkText: q => `지금은 지니맵에서 검색할 수 없어요. 버튼을 누르면 지도 앱에서 "${q}" 검색 결과를 볼 수 있어요.`,
+        photosOnNaver: '📷 네이버에서 사진 보기',
         chooseCourse: '여행 코스를 골라 보세요',
         stops: n => `${n}곳`,
         courseCount: n => `코스 ${n}개`,
@@ -1063,6 +1082,15 @@
         googlePhoto: 'Google提供の写真',
         examplePhoto: 'イメージ写真',
         exampleTip: '雰囲気を伝えるイメージ写真です。下のリストのお店の実際の写真ではありません。',
+        linkTitle: '地図は少しお休み中です',
+        linkText: '本日は利用者が多く、地図を表示できません。コースやプランはそのまま見られます。各スポットのGoogleマップ・NAVER Map・TMAPボタンで経路を調べてください。',
+        linkCourseNote: '現在、営業時間や公共交通の所要時間は表示できません。各スポットの地図アプリボタンで経路を調べてください。',
+        foodLink: n => `${n}周辺のグルメを探す`,
+        cafeLink: n => `${n}周辺のカフェを探す`,
+        planCountLink: (a, f) => `観光${a}か所・グルメ/カフェ検索${f}回`,
+        nearbyLinkText: (r, c) => `現在、周辺検索はご利用いただけません。ボタンを押すと地図アプリで「${r} ${c}」の検索結果を見られます。`,
+        searchLinkText: q => `現在、検索はご利用いただけません。ボタンを押すと地図アプリで「${q}」を検索できます。`,
+        photosOnNaver: '📷 NAVERで写真を見る',
         chooseCourse: '旅行コースを選んでください',
         stops: n => `${n}か所`,
         courseCount: n => `${n}コース`,
@@ -1142,6 +1170,15 @@
         googlePhoto: 'Google提供的图片',
         examplePhoto: '示例图片',
         exampleTip: '这是展示氛围的示例图片,并非下方列表中店铺的实际照片。',
+        linkTitle: '地图正在稍作休息',
+        linkText: '今天访问的人太多,地图暂时无法显示。路线和行程仍可查看,可通过每个地点的Google地图、Naver地图、TMAP按钮查找路线。',
+        linkCourseNote: '目前无法显示营业时间和公共交通时间。请用每个地点的地图应用按钮查找路线。',
+        foodLink: n => `查找${n}附近的餐厅`,
+        cafeLink: n => `查找${n}附近的咖啡馆`,
+        planCountLink: (a, f) => `景点${a}处 · 餐厅/咖啡馆搜索${f}次`,
+        nearbyLinkText: (r, c) => `目前无法搜索附近地点。点击按钮,可在地图应用中查看"${r} ${c}"的搜索结果。`,
+        searchLinkText: q => `目前无法搜索。点击按钮,可在地图应用中搜索"${q}"。`,
+        photosOnNaver: '📷 在Naver查看照片',
         chooseCourse: '请选择旅行路线',
         stops: n => `${n}个景点`,
         courseCount: n => `${n}条路线`,
@@ -1564,6 +1601,25 @@
       return { ...EXTRA_SPOTS[key], photo: key };
     }
 
+    // 명소 이름 (한국어, 영어) — Google 정보를 못 불러올 때(링크 모드)에도 이름을 보여 주려고 적어 둠
+    const SPOT_NAMES = {
+      gyeongbokgung: ['경복궁', 'Gyeongbokgung Palace'], bukchon: ['북촌 한옥마을', 'Bukchon Hanok Village'],
+      changdeokgung: ['창덕궁', 'Changdeokgung Palace'], insadong: ['인사동', 'Insadong'], myeongdong: ['명동', 'Myeongdong'],
+      nseoultower: ['N서울타워', 'N Seoul Tower'], ddp: ['동대문디자인플라자', 'Dongdaemun Design Plaza'], seoulforest: ['서울숲', 'Seoul Forest'],
+      gwangjang: ['광장시장', 'Gwangjang Market'], cheonggyecheon: ['청계천', 'Cheonggyecheon Stream'], banpo: ['반포한강공원', 'Banpo Hangang Park'],
+      lotteworldtower: ['롯데월드타워 서울스카이', 'Lotte World Tower Seoul Sky'], gamcheon: ['감천문화마을', 'Gamcheon Culture Village'],
+      jagalchi: ['자갈치시장', 'Jagalchi Market'], haeundae: ['해운대해수욕장', 'Haeundae Beach'], gwangalli: ['광안리해수욕장', 'Gwangalli Beach'],
+      songdo: ['송도해수욕장', 'Songdo Beach'], huinnyeoul: ['흰여울문화마을', 'Huinnyeoul Culture Village'], taejongdae: ['태종대', 'Taejongdae'],
+      yongdusan: ['용두산공원 부산타워', 'Yongdusan Park & Busan Tower'], haedong: ['해동용궁사', 'Haedong Yonggungsa Temple'],
+      bulguksa: ['불국사', 'Bulguksa Temple'], gjmuseum: ['국립경주박물관', 'Gyeongju National Museum'], daereungwon: ['대릉원', 'Daereungwon Tomb Complex'],
+      wolji: ['동궁과 월지', 'Donggung Palace and Wolji Pond'], cheomseongdae: ['첨성대', 'Cheomseongdae Observatory'], seokguram: ['석굴암', 'Seokguram Grotto'],
+      hwangnidan: ['황리단길', 'Hwangnidan-gil'], gyochon: ['경주 교촌마을', 'Gyochon Village'], woljeonggyo: ['월정교', 'Woljeonggyo Bridge'],
+      seongsan: ['성산일출봉', 'Seongsan Ilchulbong'], seopjikoji: ['섭지코지', 'Seopjikoji'], woljeongri: ['월정리해수욕장', 'Woljeongri Beach'],
+      hamdeok: ['함덕해수욕장', 'Hamdeok Beach'], osulloc: ['오설록 티뮤지엄', 'Osulloc Tea Museum'], jusangjeolli: ['대포 주상절리', 'Daepo Jusangjeolli Cliff'],
+      cheonjiyeon: ['천지연폭포', 'Cheonjiyeon Waterfall'], hyeopjae: ['협재해수욕장', 'Hyeopjae Beach'], dongmun: ['동문시장', 'Dongmun Market']
+    };
+    const spotName = key => SPOT_NAMES[key][LANG === 'ko' ? 0 : 1];
+
     // 카테고리 아이콘 (type: Google 장소 종류)
     const ICON = {
       courses: '<path d="M6 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M9 16h6a3 3 0 0 0 0-6h-1"/>',
@@ -1883,14 +1939,48 @@
       };
     }
 
-    function appButtonsHtml(rec) {
+    function appButtonsHtml(rec, withGoogle = false) {
       const l = appLinks(rec);
       return `
         <div class="app-btns">
+          ${withGoogle ? `<a class="app-btn google gmap-link" href="${esc(rec.url)}" target="_blank" rel="noopener"><i>G</i>${T.openGoogle}</a>` : ''}
           <a class="app-btn naver" href="${esc(isMobile() ? l.naverApp : l.naverWeb)}" data-app-url="${esc(l.naverApp)}" target="_blank" rel="noopener"
              title="${esc(T.naverTitle)}" data-app="naver" data-web="${esc(l.naverWeb)}"><i>N</i>${T.naver}</a>
           <a class="app-btn tmap" href="${esc(l.tmapApp)}" title="${esc(T.tmapTitle)}" data-app="tmap"><i>T</i>${T.tmap}</a>
         </div>`;
+    }
+
+    // ---------- 링크 모드 (키 없이도 쓰는 방식) ----------
+    // Google 지도가 안 뜨거나(사용량 소진·키 문제) 장소 정보를 못 받으면,
+    // 지니맵이 직접 가진 정보(명소 이름·사진·팁·위치)와 지도 앱 링크로 계속 보여 줘요.
+    let placesDown = false;
+    const naverSearchUrl = q => 'https://map.naver.com/p/search/' + encodeURIComponent(q);
+    const googleSearchUrl = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+    const googleDirUrl = (from, to) => 'https://www.google.com/maps/dir/?' + new URLSearchParams({ api: '1', origin: from, destination: to, travelmode: 'transit' });
+
+    // 지니맵 명소 → 장소 기록 (Google 없이)
+    function spotRec(key) {
+      const [lat, lng] = SPOT_AT[key];
+      const rec = { id: 'spot:' + key, name: spotName(key), address: '', lat, lng, url: googleSearchUrl(spotInfo(key).query), photo: key, gphoto: null, kind: 'attraction' };
+      placeIndex.set(rec.id, rec);
+      return rec;
+    }
+
+    // "네이버 지도 / Google 지도에서 검색 결과 보기" 버튼
+    function searchLinksHtml(naverQ, googleQ) {
+      return `
+        <div class="app-btns">
+          <a class="app-btn naver gmap-link" href="${esc(naverSearchUrl(naverQ))}" target="_blank" rel="noopener"><i>N</i>${T.naver}</a>
+          <a class="app-btn google gmap-link" href="${esc(googleSearchUrl(googleQ))}" target="_blank" rel="noopener"><i>G</i>${T.openGoogle}</a>
+        </div>`;
+    }
+
+    // 지금 보고 있는 지역 (링크 검색어에 씀)
+    const currentRegion = () => weatherRegion && weatherRegion !== 'all' ? weatherRegion : 'seoul';
+
+    function showMapRest() {
+      mapsReady = false;
+      showMapMsg(T.linkTitle, T.linkText);
     }
 
     // 카드 안의 작은 버튼·링크를 누르면 카드 자체는 눌리지 않게 먼저 처리
@@ -2269,12 +2359,14 @@
 
     // ---------- 코스 열기 ----------
     let listScroll = null;
+    let lastCourse = null;
     async function openCourse(ci) {
       const token = ++courseToken;
       const course = COURSES[ci];
       const lang = LANG;
+      lastCourse = ci;
 
-      listScroll = { panel: side.scrollTop, page: window.scrollY };
+      if (!$('courseListWrap').hidden) listScroll = { panel: side.scrollTop, page: window.scrollY };
       $('courseListWrap').hidden = true;
       sizeListSpace();
       setWeatherRegion(course.region);
@@ -2313,15 +2405,14 @@
       if (isNarrow()) window.scrollTo({ top: 0 }); else side.scrollTop = 0;
 
       clearCourseLayer();
-      if (!mapsReady) {
-        $('totalBox').textContent = T.keyText;
-        return;
-      }
-      infoWindow.close();
+      if (mapsReady) infoWindow.close();
+      // 지도나 장소 정보를 쓸 수 없으면 링크 모드로
+      if (!mapsReady || placesDown) { renderCourseLinks(course); return; }
 
       // 1) 장소 정보 가져오기
       const places = await Promise.all(course.stops.map(s => findPlace(s.query).catch(() => null)));
       if (token !== courseToken) return;
+      if (places.every(p => !p)) { placesDown = true; renderCourseLinks(course); return; }
       const opens = places.map(p => p ? openState(p) : null);
 
       const bounds = new google.maps.LatLngBounds();
@@ -2383,6 +2474,37 @@
         : T.totalPartial;
     }
 
+    // 링크 모드 코스: 지니맵 정보(이름·사진·팁·위치) + Google 지도·네이버 지도·티맵 버튼
+    function renderCourseLinks(course) {
+      $('totalBox').textContent = T.linkCourseNote;
+      const recs = course.stops.map(s => spotRec(s.photo));
+      const bounds = mapsReady ? new google.maps.LatLngBounds() : null;
+      recs.forEach((rec, i) => {
+        const stop = course.stops[i];
+        const tipHtml = `<p class="tip"><b>${T.tip}</b>${esc(stop.tip[LANG])}</p>`;
+        $('stop' + i).innerHTML = `
+          <div class="name-row"><div class="stop-name">${esc(rec.name)}</div>${saveBtnHtml(rec)}</div>
+          ${distHtml(rec)}
+          ${tipHtml}
+          <div class="actions"><span>⏱ ${T.stay(stop.stay)}</span></div>
+          ${appButtonsHtml(rec, true)}`;
+        if (i < recs.length - 1) {
+          $('seg' + i).innerHTML = `<a href="${esc(googleDirUrl(stop.query, course.stops[i + 1].query))}" target="_blank" rel="noopener">🚇 ${T.directions} (Google) ↗</a>`;
+        }
+        // 지도는 뜨는데 장소 정보만 못 받는 경우: 지니맵이 아는 위치로 마커 표시
+        if (mapsReady) {
+          const show = () => { highlightStop(i); openInfo(courseLayer.markers[i], rec, '', tipHtml); };
+          courseLayer.markers.push(makeMarker({ lat: rec.lat, lng: rec.lng }, String(i + 1), course.color, rec.name, show));
+          bounds.extend({ lat: rec.lat, lng: rec.lng });
+          $('stop' + i).closest('.stop-btn').onclick = () => focusOn(rec, show);
+        }
+      });
+      if (mapsReady) {
+        courseLayer.lines.push(new google.maps.Polyline({ map, path: recs.map(r => ({ lat: r.lat, lng: r.lng })), ...lineOptions(1, true) }));
+        map.fitBounds(bounds, 70);
+      }
+    }
+
     function highlightStop(i) {
       document.querySelectorAll('.stop-btn').forEach((b, j) => b.classList.toggle('active', i === j));
       courseLayer.markers.forEach((m, j) => { if (m) m.content.classList.toggle('active', i === j); });
@@ -2439,7 +2561,8 @@
               <div class="name-row"><div class="stop-name">${esc(rec.name)}</div>${saveBtnHtml(rec)}</div>
               ${placeMetaHtml(place, open)}
               ${distHtml(rec)}
-              <div class="actions"><a class="gmap-link" href="${esc(rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a></div>
+              <div class="actions"><a class="gmap-link" href="${esc(rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a>
+                ${iconKey !== 'attraction' && !rec.gphoto ? `<a class="gmap-link" href="${esc(naverSearchUrl(rec.name))}" target="_blank" rel="noopener">${T.photosOnNaver}</a>` : ''}</div>
               ${appButtonsHtml(rec)}
             </div>
           </button>`;
@@ -2484,7 +2607,13 @@
           <h2>${svg(ICON[catKey], 26)}${esc(T.cats[catKey])}</h2>`;
         banner.hidden = false;
       }
-      if (!mapsReady) { $('listStatus').innerHTML = `<p class="error">${T.keyText}</p>`; return; }
+      // 링크 모드: 지도 앱에서 "지역 + 종류" 검색 결과를 보도록
+      const nearbyLinks = () => {
+        const r = currentRegion();
+        $('listStatus').innerHTML = `<p class="note">${esc(T.nearbyLinkText(REGIONS[r].name[LANG], T.cats[catKey]))}</p>
+          ${searchLinksHtml(REGIONS[r].name.ko + ' ' + TEXT.ko.cats[catKey], REGIONS[r].name.en + ' ' + TEXT.en.cats[catKey])}`;
+      };
+      if (!mapsReady || placesDown) { nearbyLinks(); return; }
 
       // 지도가 너무 넓게 보이면(나라 전체) 먼저 지금 지역으로 확대
       if (map.getZoom() < 11) {
@@ -2513,7 +2642,7 @@
           region: 'kr'
         }));
       } catch (e) {
-        if (token === listToken) $('listStatus').innerHTML = `<p class="error">${T.searchError}</p>`;
+        if (token === listToken) { placesDown = true; nearbyLinks(); }
         return;
       }
       if (token !== listToken) return;
@@ -2535,7 +2664,11 @@
     async function runSearch(q) {
       setMode('search');
       const token = startList(T.searchTitle(q), T.searchHint, `<p class="loading">${T.searching}</p>`);
-      if (!mapsReady) { $('listStatus').innerHTML = `<p class="error">${T.keyText}</p>`; return; }
+      // 링크 모드: 지도 앱에서 같은 검색어로 찾아보기
+      const searchLinks = () => {
+        $('listStatus').innerHTML = `<p class="note">${esc(T.searchLinkText(q))}</p>${searchLinksHtml(q, q)}`;
+      };
+      if (!mapsReady || placesDown) { searchLinks(); return; }
       let places;
       try {
         ({ places } = await Place.searchByText({
@@ -2547,7 +2680,7 @@
           locationRestriction: KOREA_BOUNDS
         }));
       } catch (e) {
-        if (token === listToken) $('listStatus').innerHTML = `<p class="error">${T.searchError}</p>`;
+        if (token === listToken) { placesDown = true; searchLinks(); }
         return;
       }
       if (token !== listToken) return;
@@ -2665,8 +2798,29 @@
       return null;
     }
 
+    // 링크 모드 일정: 지니맵 명소 + "근처 맛집·카페 찾아보기" 버튼
+    function buildLinkPlan() {
+      const region = planRegion, len = planLen;
+      const days = PLAN_DAYS[region].slice(0, len + 1).map(([k1, k2, k3]) => [
+        { kind: 'sight', key: k1, rec: spotRec(k1) },
+        { kind: 'restaurant', meal: 'lunch', near: k1, link: true },
+        { kind: 'sight', key: k2, rec: spotRec(k2) },
+        { kind: 'cafe', meal: 'cafe', near: k2, link: true },
+        { kind: 'sight', key: k3, rec: spotRec(k3) },
+        { kind: 'restaurant', meal: 'dinner', near: k3, link: true }
+      ]);
+      $('makePlanBtn').disabled = false;
+      $('planStatus').innerHTML = '';
+      setWeatherRegion(region);
+      plan = { region, len, days, linkOnly: true };
+      planDay = 0;
+      renderPlanResult();
+      if (mapsReady) drawPlanLayer();
+      selectDay(0);
+    }
+
     async function buildPlan() {
-      if (!mapsReady) { $('planStatus').innerHTML = `<p class="error">${T.keyText}</p>`; return; }
+      if (!mapsReady || placesDown) { buildLinkPlan(); return; }
       const token = ++planToken;
       const btn = $('makePlanBtn');
       btn.disabled = true;
@@ -2678,6 +2832,8 @@
       // 1) 명소 정보 (Google Places)
       const sights = await Promise.all(dayKeys.map(keys =>
         Promise.all(keys.map(k => findPlace(spotInfo(k).query).catch(() => null)))));
+      if (token !== planToken) return;
+      if (sights.flat().every(p => !p)) { placesDown = true; buildLinkPlan(); return; }
       const used = new Set(sights.flat().filter(Boolean).map(p => p.id));
 
       // 2) 명소 근처 점심 · 카페 · 저녁 (Google Places Nearby Search)
@@ -2735,7 +2891,9 @@
           <div class="stats">
             <div class="plan-badge">${esc(T.lengthShort[plan.len])}</div>
             <ul>
-              <li>${esc(T.planCount(all.length, count('sight'), count('restaurant'), count('cafe')))}</li>
+              <li>${esc(plan.linkOnly
+                ? T.planCountLink(count('sight'), plan.days.flat().filter(it => it.link).length)
+                : T.planCount(all.length, count('sight'), count('restaurant'), count('cafe')))}</li>
               <li>${esc(T.planArea(rName))}</li>
               <li>${esc(T.planDist(Math.round(dist) + ' km'))}</li>
             </ul>
@@ -2759,6 +2917,12 @@
         // 그날 가운데 명소 근처 주차장 찾기
         const mid = plan.days[planDay].filter(it => it.rec)[Math.floor(plan.days[planDay].length / 2)] || plan.days[planDay].find(it => it.rec);
         if (!mid) return;
+        // 링크 모드: 네이버 지도에서 "명소 이름 + 주차장" 검색
+        if (!mapsReady || placesDown) {
+          const ko = mid.key ? SPOT_NAMES[mid.key][0] : mid.rec.name;
+          window.open(naverSearchUrl(ko + ' 주차장'), '_blank', 'noopener');
+          return;
+        }
         map.setCenter({ lat: mid.rec.lat, lng: mid.rec.lng });
         map.setZoom(15);
         await new Promise(r => google.maps.event.addListenerOnce(map, 'idle', r));
@@ -2804,7 +2968,7 @@
       document.querySelectorAll('#planDayList .stop-btn').forEach(b => b.classList.toggle('active', b.dataset.rid === it.rec.id));
       planLayer.markers[d].forEach((m, j) => m.content.classList.toggle('active', i === j));
       const tip = it.kind === 'sight' ? `<p class="tip"><b>${T.tip}</b>${esc(spotInfo(it.key).tip[LANG])}</p>` : '';
-      openInfo(planLayer.markers[d][i], it.rec, placeMetaHtml(it.place, openState(it.place)), tip);
+      openInfo(planLayer.markers[d][i], it.rec, it.place ? placeMetaHtml(it.place, openState(it.place)) : '', tip);
     }
 
     function selectDay(d, fit = true) {
@@ -2819,6 +2983,17 @@
           ${day.map((it, idx) => {
             const kc = KIND_COLORS[it.kind];
             const kindTag = `<span class="kind" style="--k:${kc}">${esc(T.kinds[it.kind])}${it.meal ? `<small>${esc(T.meals[it.meal])}</small>` : ''}</span>`;
+            if (it.link) {
+              // 링크 모드: 명소 근처 맛집·카페를 지도 앱에서 찾아보기
+              const ko = SPOT_NAMES[it.near][0], en = SPOT_NAMES[it.near][1];
+              const cafe = it.kind === 'cafe';
+              return `<li><div class="stop-btn" style="cursor:default">
+                <div class="thumb-col"><div class="thumb cat-thumb" style="--c:${kc}">${svg(ICON[KIND_ICON[it.kind]], 34)}</div></div>
+                <div>${kindTag}
+                  <div class="stop-name">${esc((cafe ? T.cafeLink : T.foodLink)(spotName(it.near)))}</div>
+                  ${searchLinksHtml(ko + (cafe ? ' 카페' : ' 맛집'), en + (cafe ? ' cafe' : ' restaurant'))}
+                </div></div></li>`;
+            }
             if (!it.rec) {
               return `<li><div class="stop-btn" style="cursor:default"><div class="thumb-col">${thumbHtml({ photo: it.key }, '·', kc, KIND_ICON[it.kind])}</div><div>${kindTag}<p class="error">${T.placeError}</p></div></div></li>`;
             }
@@ -2832,12 +3007,13 @@
                   <div>
                     ${kindTag}
                     <div class="name-row"><div class="stop-name">${esc(it.rec.name)}</div>${saveBtnHtml(it.rec)}</div>
-                    ${placeMetaHtml(it.place, openState(it.place))}
+                    ${it.place ? placeMetaHtml(it.place, openState(it.place)) : ''}
                     ${distHtml(it.rec)}
                     ${spot ? `<p class="tip"><b>${T.tip}</b>${esc(spot.tip[LANG])}</p>` : ''}
                     <div class="actions">${spot ? `<span>⏱ ${T.stay(spot.stay)}</span>` : ''}
-                      <a class="gmap-link" href="${esc(it.rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a></div>
-                    ${appButtonsHtml(it.rec)}
+                      ${it.place ? `<a class="gmap-link" href="${esc(it.rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a>` : ''}
+                      ${!spot && !it.rec.gphoto ? `<a class="gmap-link" href="${esc(naverSearchUrl(it.rec.name))}" target="_blank" rel="noopener">${T.photosOnNaver}</a>` : ''}</div>
+                    ${appButtonsHtml(it.rec, !it.place)}
                   </div>
                 </button>
               </li>
@@ -2847,7 +3023,7 @@
       $('planDayList').querySelectorAll('.stop-btn[data-rid]').forEach(b => {
         const i = Number(b.dataset.i);
         const it = day.filter(x => x.rec)[i];
-        b.addEventListener('click', () => focusOn(it.rec, () => openPlanItem(d, i)));
+        b.addEventListener('click', () => { if (mapsReady) focusOn(it.rec, () => openPlanItem(d, i)); });
       });
 
       // 지도: 고른 날은 진하게, 다른 날은 흐리게
@@ -2866,6 +3042,11 @@
       const byId = id => day.find(x => x.rec && x.rec.id === id);
       $('planDayList').querySelectorAll('.seg-mini').forEach(async el => {
         const a = byId(el.dataset.from), b = byId(el.dataset.to);
+        if (!a.place || !b.place) {
+          // 링크 모드: Google 지도 대중교통 길찾기 링크만
+          el.innerHTML = `<a href="${esc(googleDirUrl(spotInfo(a.key).query, spotInfo(b.key).query))}" target="_blank" rel="noopener">🚇 ${T.directions} (Google) ↗</a>`;
+          return;
+        }
         const key = el.dataset.from + '>' + el.dataset.to;
         if (!routeCache.has(key)) routeCache.set(key, transitRoute(a.place, b.place).catch(() => 'error'));
         const route = await routeCache.get(key);
@@ -2919,9 +3100,11 @@
     }
 
     // API 키가 틀렸거나 사용할 수 없을 때 Google이 부르는 함수
+    //  → 지도 대신 "링크 모드" 안내를 보여 주고, 코스·일정은 지도 앱 버튼으로 계속 쓸 수 있게
     window.gm_authFailure = () => {
-      mapsReady = false;
-      showMapMsg(T.authTitle, T.authText);
+      showMapRest();
+      // 이미 열어 둔 코스가 있으면 링크 모드로 다시 그리기
+      if (mode === 'courses' && !$('courseDetail').hidden && lastCourse !== null) openCourse(lastCourse);
     };
 
     if (GOOGLE_MAPS_API_KEY.includes('YOUR_')) {
@@ -2935,7 +3118,7 @@
         region: 'KR'
       });
 
-      initMap().catch(() => showMapMsg(T.authTitle, T.loadText));
+      initMap().catch(showMapRest);
     }
   </script>
 </body>
