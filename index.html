@@ -1,0 +1,2942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GENIE MAP 지니맵 · Korea Travel Courses</title>
+  <meta name="description" content="Themed Korea travel courses for international travelers — Seoul, Busan, Gyeongju and Jeju on Google Maps with live place info, subway routes and nearby search.">
+
+  <!-- 카카오톡·문자 링크 미리보기 -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GENIE MAP 지니맵 · Korea Travel Courses">
+  <meta property="og:description" content="외국인 여행자를 위한 한국 여행 코스 지도 · Seoul, Busan, Gyeongju, Jeju">
+  <meta property="og:url" content="https://jiniya1227.github.io/genie-map/">
+  <meta property="og:image" content="https://jiniya1227.github.io/genie-map/og.png?v=20261103b">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- 브라우저 탭 아이콘 -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237a5af8'/%3E%3Cstop offset='1' stop-color='%233d6af2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M32 11c-8.3 0-15 6.5-15 14.6C17 36.5 32 52 32 52s15-15.5 15-26.4C47 17.5 40.3 11 32 11z' fill='%23fff'/%3E%3Ccircle cx='32' cy='26' r='6' fill='%23ffb020'/%3E%3C/svg%3E">
+
+  <!-- 글꼴 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #3d6af2;
+      --blue-deep: #2346c4;
+      --violet: #7a5af8;
+      --grad: linear-gradient(90deg, #7a5af8 0%, #3d6af2 100%);
+      --sun: #ffb020;
+      --coral: #ff6b6b;
+      --mint: #12b5a0;
+      --bg: #f4f7ff;
+      --soft: #eef3ff;
+      --card: #ffffff;
+      --line: #e6eaf3;
+      --ink: #1d2433;
+      --muted: #6b7280;
+      --radius: 18px;
+      --shadow: 0 8px 24px rgba(37, 64, 160, 0.08);
+      --header-h: 68px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+
+    body {
+      font-family: 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Noto Serif KR', serif; font-weight: 700; }
+    .en { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+    a { color: var(--blue); }
+    button { font: inherit; color: inherit; }
+    :focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+
+    /* ---------- 머리글 (흰색) ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(37, 64, 160, 0.06);
+    }
+    .header-inner {
+      height: var(--header-h);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex-shrink: 0; }
+    .logo {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: var(--grad);
+      display: grid; place-items: center;
+      box-shadow: 0 4px 12px rgba(61, 106, 242, 0.3);
+    }
+    .brand-en { font-size: 1.5rem; font-weight: 600; line-height: 1; color: var(--ink); }
+    .brand-ko { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 0.95rem; color: var(--blue); margin-left: 6px; }
+
+    .top-search {
+      flex: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      background: var(--soft);
+      border: 1.5px solid transparent;
+      border-radius: 999px;
+      padding: 4px 4px 4px 18px;
+      transition: border-color .2s, background .2s;
+    }
+    .top-search:focus-within { border-color: var(--blue); background: #fff; }
+    .top-search input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      font-size: 0.95rem;
+      padding: 6px 0;
+    }
+    .top-search input:focus { outline: none; }
+    .top-search button {
+      width: 40px; height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: grid; place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .top-search button:hover { background: var(--blue-deep); }
+
+    .lang {
+      display: flex; align-items: center; gap: 4px;
+      border: 1.5px solid var(--line);
+      border-radius: 999px;
+      padding: 2px 6px 2px 12px;
+      flex-shrink: 0;
+    }
+    .lang select {
+      border: 0;
+      background: transparent;
+      font: inherit;
+      font-size: 0.9rem;
+      padding: 6px 2px;
+      cursor: pointer;
+    }
+
+    /* ---------- 앱 화면: 왼쪽 패널 + 오른쪽 지도 ---------- */
+    .app {
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      height: calc(100vh - var(--header-h));
+      min-height: 520px;
+    }
+    .side {
+      background: #fff;
+      border-right: 1px solid var(--line);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    /* 날씨 카드 */
+    .weather-card {
+      margin: 16px 16px 0;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      background:
+        radial-gradient(circle at 92% 12%, rgba(255, 176, 32, 0.35), rgba(255, 176, 32, 0) 38%),
+        linear-gradient(135deg, #e7efff 0%, #f1eaff 55%, #fff6e6 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .wc-tag { font-size: 0.95rem; color: var(--violet); }
+    .weather-card h2 { font-size: 1.35rem; line-height: 1.3; margin: 2px 0 4px; word-break: keep-all; }
+    .weather-card p { font-size: 0.85rem; color: #4b5563; word-break: keep-all; }
+    .wc-right { text-align: right; flex-shrink: 0; }
+    .wc-now { display: flex; align-items: center; justify-content: flex-end; gap: 4px; font-size: 0.82rem; color: #4b5563; }
+    .wc-now img { width: 34px; height: 34px; }
+    .wc-temp { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 1.7rem; line-height: 1; color: var(--ink); }
+    .wc-desc { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    /* 카테고리 아이콘 */
+    .cats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px 2px;
+      padding: 16px 12px 12px;
+      border-bottom: 8px solid var(--bg);
+    }
+    .cat {
+      border: 0;
+      background: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 2px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: #4b5563;
+      line-height: 1.3;
+      text-align: center;
+      word-break: keep-all;
+    }
+    .cat-ico {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      display: grid; place-items: center;
+      color: var(--ico, var(--blue));
+      transition: transform .2s, background .2s, box-shadow .2s;
+    }
+    .cat:hover .cat-ico { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .cat[aria-pressed="true"] { color: var(--ink); font-weight: 700; }
+    .cat[aria-pressed="true"] .cat-ico { background: var(--grad); border-color: transparent; color: #fff; box-shadow: 0 6px 16px rgba(61, 106, 242, 0.3); }
+
+    .side-body { padding: 16px 18px 24px; }
+    .section-title { font-size: 1.15rem; margin-bottom: 10px; }
+
+    /* 지역 고르기 */
+    .region-filter { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .region-filter button {
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .region-filter button.viewing { border-color: var(--blue); color: var(--blue); }
+    .region-filter button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    /* 지역별 묶음 */
+    .region-list { list-style: none; }
+    .region-sec + .region-sec { margin-top: 26px; }
+    .region-head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(6px);
+      margin: 0 -18px 12px;
+      padding: 10px 18px 8px;
+      border-bottom: 1px solid var(--line);
+    }
+    .region-head h3 { display: flex; align-items: baseline; gap: 8px; font-size: 1.15rem; }
+    .region-head h3 .en { font-size: 1rem; font-weight: 500; color: var(--violet); }
+    .region-head h3 small { margin-left: auto; font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+    .region-head p { font-size: 0.85rem; color: #4b5563; margin-top: 2px; word-break: keep-all; }
+
+    /* 사진 코스 카드 */
+    .course-list { list-style: none; display: grid; gap: 14px; }
+    .course-card {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .course-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(37, 64, 160, 0.14); }
+    .cover {
+      position: relative;
+      height: 158px;
+      background: var(--soft) center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 14px 16px;
+      color: #fff;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(10, 16, 40, 0.72) 100%);
+    }
+    .cover > * { position: relative; }
+    .cover-num {
+      align-self: flex-start;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: var(--c, var(--blue));
+      border-radius: 999px;
+      padding: 0 10px;
+      margin-bottom: 6px;
+    }
+    .cover h3 { font-size: 1.15rem; line-height: 1.35; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35); word-break: keep-all; }
+    .credit {
+      position: absolute !important;
+      top: 10px; right: 10px;
+      max-width: 60%;
+      font-size: 0.68rem;
+      color: #fff;
+      text-decoration: none;
+      background: rgba(0, 0, 0, 0.38);
+      border-radius: 999px;
+      padding: 1px 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .credit:hover { background: rgba(0, 0, 0, 0.6); }
+    .card-body { padding: 12px 16px 14px; }
+    .card-body p { font-size: 0.88rem; color: #4b5563; word-break: keep-all; }
+    .course-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .chip {
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 1px 10px;
+      background: var(--soft);
+      color: var(--blue-deep);
+    }
+
+    /* 코스 상세 */
+    .back {
+      border: 0; background: none;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 2px 0;
+      margin-bottom: 10px;
+    }
+    .detail-cover { border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; box-shadow: var(--shadow); }
+    .detail-cover .cover { height: 180px; }
+    .detail-cover .card-body { background: #fff; }
+    .total {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--blue-deep);
+      background: var(--soft);
+      border-radius: 10px;
+      padding: 6px 10px;
+    }
+
+    .timeline { list-style: none; }
+    .stop-btn, .result-btn {
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .stop-btn:hover, .result-btn:hover { border-color: #c9d4f2; }
+    .stop-btn.active, .result-btn.active { border-color: var(--course, var(--blue)); box-shadow: var(--shadow); }
+    .thumb-col { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .thumb {
+      position: relative;
+      width: 92px; height: 92px;
+      border-radius: 14px;
+      background: var(--soft) center / cover no-repeat;
+    }
+    .thumb .num {
+      position: absolute;
+      left: 6px; top: 6px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--course, var(--blue));
+      border: 2px solid #fff;
+      color: #fff;
+      display: grid; place-items: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .thumb.cat-thumb { display: grid; place-items: center; color: #fff; background: var(--c, var(--blue)); }
+    .thumb-credit {
+      font-size: 0.62rem;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .name-row { display: flex; align-items: flex-start; gap: 8px; }
+    .stop-name { flex: 1; font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 1rem; line-height: 1.4; }
+    .save-btn {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      display: grid; place-items: center;
+      font-size: 0.95rem;
+      color: var(--muted);
+      background: #fff;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .save-btn:hover { border-color: var(--coral); color: var(--coral); }
+    .save-btn.on { border-color: var(--coral); background: #fff0f0; color: var(--coral); }
+    .addr { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 5px; font-size: 0.78rem; color: #4b5563; }
+    .badge { font-size: 0.7rem; font-weight: 700; border-radius: 999px; padding: 1px 8px; }
+    .badge.open { background: #dcf7ee; color: #0f7a5c; }
+    .badge.closed { background: #ffe8e8; color: #c42b2b; }
+    .dist { font-size: 0.78rem; color: var(--violet); font-weight: 500; margin-top: 3px; }
+    .dist:empty { display: none; }
+    .tip {
+      margin-top: 8px;
+      font-size: 0.84rem;
+      background: #fff8e8;
+      border-radius: 10px;
+      padding: 7px 10px;
+      word-break: keep-all;
+    }
+    .tip b { color: #d97706; margin-right: 4px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 8px; font-size: 0.8rem; color: var(--muted); }
+    .actions a { font-weight: 700; text-decoration: none; }
+    .loading { font-size: 0.85rem; color: var(--muted); }
+    .error { font-size: 0.85rem; color: #c42b2b; }
+
+    /* 네이버 지도·티맵 길찾기 버튼 */
+    .app-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 11px 3px 4px;
+      cursor: pointer;
+    }
+    .app-btn:hover { border-color: #c9d4f2; background: var(--soft); }
+    .app-btn i {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-style: normal;
+      font-size: 0.68rem;
+      color: #fff;
+    }
+    .app-btn.naver i { background: #03c75a; }
+    .app-btn.tmap i { background: #ef3e5c; }
+
+    /* 장소 사이 대중교통 구간 */
+    .seg {
+      margin: 0 0 0 44px;
+      border-left: 2px dashed #c9d4f2;
+      padding: 10px 0 10px 18px;
+      font-size: 0.82rem;
+    }
+    .seg-main { font-weight: 700; color: var(--blue-deep); }
+    .lines { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+    .line { font-size: 0.72rem; font-weight: 700; border-radius: 6px; padding: 1px 7px; color: #fff; background: #555; }
+    .seg a { font-weight: 700; text-decoration: none; }
+    .note {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--soft);
+      border-radius: 10px;
+      padding: 10px 12px;
+      word-break: keep-all;
+    }
+
+    /* 목록 화면 (주변 찾기 · 검색 · 내 여행) */
+    .list-head { margin-bottom: 12px; }
+    .list-head h2 { font-size: 1.15rem; line-height: 1.4; word-break: keep-all; }
+    .list-head p { font-size: 0.82rem; color: var(--muted); margin-top: 2px; word-break: keep-all; }
+    .result-list { list-style: none; display: grid; gap: 10px; }
+
+    /* 사진 출처 */
+    .credits { margin-top: 24px; font-size: 0.75rem; color: var(--muted); }
+    .credits summary { cursor: pointer; font-weight: 700; }
+    .credits ul { list-style: none; margin: 8px 0; display: grid; gap: 2px; }
+    .credits a { color: var(--muted); }
+    .credits p { margin-top: 8px; word-break: keep-all; }
+
+    /* 카테고리 그림 (실제 사진이 없을 때) */
+    .thumb.cat-thumb {
+      background: radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 45%),
+        linear-gradient(135deg, var(--c, var(--blue)) 0%, color-mix(in srgb, var(--c, var(--blue)) 55%, #fff) 100%);
+    }
+    .thumb.cat-thumb svg { filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18)); }
+
+    /* 카테고리 분위기 사진 띠 (예시 사진) */
+    .cat-banner {
+      position: relative;
+      height: 150px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+      background: var(--soft) center / cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px 16px;
+      color: #fff;
+    }
+    .cat-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(10, 16, 40, 0.7) 100%);
+    }
+    .cat-banner > * { position: relative; }
+    .cat-banner h2 { font-size: 1.3rem; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35); display: flex; align-items: center; gap: 8px; }
+    .example-tag {
+      position: absolute !important;
+      left: 12px; top: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 2px 10px;
+    }
+
+    /* 자동 추천 일정 */
+    .plan-cta {
+      width: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      background: var(--grad);
+      color: #fff;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(61, 106, 242, 0.25);
+    }
+    .plan-cta b { display: block; font-size: 1rem; }
+    .plan-cta small { font-size: 0.8rem; opacity: 0.9; }
+    .plan-cta .arrow { margin-left: auto; font-size: 1.3rem; }
+    .form-label { font-size: 0.92rem; margin: 14px 0 8px; }
+    .primary-btn {
+      width: 100%;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 14px;
+      padding: 13px;
+      background: var(--grad);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(61, 106, 242, 0.25);
+    }
+    .primary-btn:disabled { opacity: 0.6; cursor: wait; }
+    .plan-summary {
+      border-radius: var(--radius);
+      padding: 18px;
+      color: #fff;
+      background: var(--grad);
+      margin-bottom: 14px;
+    }
+    .plan-summary h3 { font-size: 1.15rem; line-height: 1.4; word-break: keep-all; }
+    .plan-summary .stats { display: flex; align-items: center; gap: 14px; margin-top: 12px; background: #fff; color: var(--ink); border-radius: 14px; padding: 12px 14px; }
+    .plan-badge {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--grad);
+      color: #fff;
+      display: grid; place-items: center;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      line-height: 1.2;
+      flex-shrink: 0;
+      word-break: keep-all;
+    }
+    .stats ul { list-style: none; font-size: 0.85rem; display: grid; gap: 2px; }
+    .stats li::before { content: "· "; color: var(--blue); font-weight: 700; }
+    .plan-summary .link-btn { margin-top: 10px; border: 0; background: none; color: #fff; font-weight: 700; font-size: 0.85rem; cursor: pointer; text-decoration: underline; }
+    .day-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 12px; }
+    .day-tab {
+      border: 1.5px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 5px 16px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+    .day-tab[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .parking-btn {
+      margin-left: auto;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 4px 12px 4px 6px;
+      font-size: 0.82rem;
+      display: inline-flex; align-items: center; gap: 4px;
+      cursor: pointer;
+    }
+    .day-head { font-size: 1.2rem; margin: 4px 0 10px; }
+    .kind {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--k, var(--blue));
+      border-radius: 4px;
+      padding: 0 7px;
+      margin-bottom: 2px;
+    }
+    .kind small { font-weight: 500; opacity: 0.9; margin-left: 4px; }
+    .seg-mini { margin: 0 0 0 44px; border-left: 2px dashed #c9d4f2; padding: 6px 0 6px 18px; font-size: 0.78rem; color: var(--muted); }
+    .seg-mini a { font-weight: 700; text-decoration: none; }
+    .plan-legend {
+      position: absolute;
+      right: 60px; top: 10px;
+      z-index: 4;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      padding: 8px 14px;
+      display: flex;
+      gap: 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .plan-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .plan-legend i { width: 26px; border-top: 3px solid var(--d); }
+
+    /* 지도 */
+    .map-wrap { position: relative; }
+    #map { position: absolute; inset: 0; background: #e8eefb; }
+    .map-btn {
+      position: absolute;
+      z-index: 4;
+      border: 0;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .locate-btn { right: 10px; top: 62px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--blue); }
+    .research-btn {
+      left: 50%; top: 14px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      padding: 9px 18px;
+      color: var(--blue);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .map-msg {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #e7efff 0%, #f1eaff 100%);
+      padding: 16px;
+    }
+    .map-msg-card { max-width: 380px; background: #fff; border-radius: 16px; box-shadow: var(--shadow); padding: 24px; text-align: center; }
+    .map-msg-card h3 { font-size: 1.15rem; margin: 6px 0; }
+    .map-msg-card p { color: var(--muted); font-size: 0.9rem; word-break: keep-all; }
+
+    /* 지도 위 마커 */
+    .mk {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      color: #fff;
+      display: grid; place-items: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+      transition: transform .2s;
+    }
+    .mk.active { transform: scale(1.25); }
+    .me-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 8px rgba(61, 106, 242, 0.22);
+    }
+
+    /* 정보 창 */
+    .iw-title { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 1rem; }
+    .iw { max-width: 280px; font-family: 'Noto Sans KR', sans-serif; }
+    .iw-photo { width: 100%; height: 120px; border-radius: 10px; background: var(--soft) center / cover no-repeat; margin-bottom: 6px; }
+
+    .toast {
+      position: fixed;
+      left: 50%; bottom: 24px;
+      transform: translateX(-50%);
+      max-width: calc(100% - 32px);
+      background: var(--ink);
+      color: #fff;
+      font-size: 0.88rem;
+      border-radius: 12px;
+      padding: 10px 16px;
+      box-shadow: var(--shadow);
+      z-index: 50;
+      word-break: keep-all;
+    }
+
+    /* ---------- 휴대폰·태블릿 ---------- */
+    @media (max-width: 900px) {
+      .site-header { position: static; }
+      .header-inner { height: auto; flex-wrap: wrap; padding: 10px 16px; gap: 10px; }
+      .brand { margin-right: auto; }
+      .top-search { order: 3; flex-basis: 100%; max-width: none; }
+      .app { display: flex; flex-direction: column; height: auto; }
+      /* 지도를 화면 위에 붙여 두고, 아래 목록을 스크롤하면 지도가 따라 움직임 */
+      .map-wrap { order: -1; position: sticky; top: 0; z-index: 6; height: 42vh; min-height: 280px; }
+      .side { overflow: visible; border-right: 0; }
+      .region-head { position: static; }
+    }
+    @media (max-width: 480px) {
+      .brand-ko { display: none; }
+      .weather-card { margin: 12px 12px 0; padding: 16px; }
+      .cats { padding: 14px 8px 10px; }
+      .cat-ico { width: 46px; height: 46px; }
+      .side-body { padding: 14px 14px 24px; }
+      .region-head { margin: 0 -14px 12px; padding: 10px 14px 8px; }
+      .stop-btn, .result-btn { grid-template-columns: 76px 1fr; }
+      .thumb { width: 76px; height: 76px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./">
+        <div class="logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24">
+            <path d="M12 2C7.6 2 4 5.4 4 9.7 4 15.5 12 22 12 22s8-6.5 8-12.3C20 5.4 16.4 2 12 2z" fill="#fff"/>
+            <circle cx="12" cy="9.5" r="3" fill="#ffb020"/>
+          </svg>
+        </div>
+        <div><span class="brand-en en">Genie Map</span><span class="brand-ko">지니맵</span></div>
+      </a>
+
+      <!-- 장소 검색 (Google Places) -->
+      <form class="top-search" id="searchForm" role="search">
+        <input type="search" id="searchInput" data-i18n-placeholder="searchPlaceholder" autocomplete="off">
+        <button type="submit" data-i18n-label="searchBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </button>
+      </form>
+
+      <label class="lang">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3d6af2" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+        <select id="langSelect" aria-label="Language">
+          <option value="en">English</option>
+          <option value="ko">한국어</option>
+          <option value="ja">日本語</option>
+          <option value="zh">中文(简体)</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <main class="app">
+    <!-- 왼쪽 패널 -->
+    <aside class="side" id="side">
+      <!-- 지금 보고 있는 지역 + 날씨 (Google Weather API) -->
+      <section class="weather-card">
+        <div>
+          <div class="wc-tag en">Korea Travel Courses</div>
+          <h2 id="wcTitle"></h2>
+          <p data-i18n="heroTitle"></p>
+        </div>
+        <div class="wc-right" id="wcWeather"></div>
+      </section>
+
+      <!-- 카테고리 아이콘 -->
+      <nav class="cats" id="cats" aria-label="Categories"></nav>
+
+      <div class="side-body">
+        <!-- 여행 코스 -->
+        <section id="coursesView">
+          <div id="courseListWrap">
+            <button type="button" class="plan-cta" id="planCta">
+              <span style="font-size:1.6rem">🗓</span>
+              <span><b data-i18n="ctaTitle"></b><small data-i18n="ctaText"></small></span>
+              <span class="arrow">→</span>
+            </button>
+            <h2 class="section-title" data-i18n="chooseCourse"></h2>
+            <div class="region-filter" id="regionFilter" role="group"></div>
+            <ul class="region-list" id="courseList"></ul>
+            <details class="credits" id="credits"></details>
+          </div>
+          <div id="courseDetail" hidden></div>
+        </section>
+
+        <!-- 주변 찾기 · 검색 결과 · 내 여행 -->
+        <section id="listView" hidden>
+          <div class="cat-banner" id="catBanner" hidden></div>
+          <div class="list-head">
+            <h2 id="listTitle"></h2>
+            <p id="listHint"></p>
+          </div>
+          <div id="listStatus"></div>
+          <ul class="result-list" id="resultList"></ul>
+        </section>
+
+        <!-- 자동 추천 일정 -->
+        <section id="planView" hidden>
+          <div class="list-head">
+            <h2 data-i18n="planTitle"></h2>
+            <p data-i18n="planHint"></p>
+          </div>
+          <div id="planForm">
+            <h3 class="form-label" data-i18n="planRegion"></h3>
+            <div class="region-filter" id="planRegion" role="group"></div>
+            <h3 class="form-label" data-i18n="planLength"></h3>
+            <div class="region-filter" id="planLength" role="group"></div>
+            <button type="button" class="primary-btn" id="makePlanBtn" data-i18n="makePlan"></button>
+            <div id="planStatus" style="margin-top:12px"></div>
+          </div>
+          <div id="planResult" hidden></div>
+        </section>
+      </div>
+    </aside>
+
+    <!-- 오른쪽: Google 지도 -->
+    <section class="map-wrap" aria-label="Map">
+      <div id="map"></div>
+      <div class="plan-legend" id="planLegend" hidden></div>
+      <button type="button" class="map-btn research-btn" id="researchBtn" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        <span data-i18n="researchHere"></span>
+      </button>
+      <button type="button" class="map-btn locate-btn" id="locateBtn" data-i18n-label="myLocation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+      </button>
+      <div class="map-msg" id="mapMsg" hidden>
+        <div class="map-msg-card">
+          <div class="en" style="color:var(--violet)">Genie Map</div>
+          <h3 id="mapMsgTitle"></h3>
+          <p id="mapMsgText"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script>
+    // ============================================================
+    // ★ Google Maps API 키를 넣는 곳 ★
+    //   아래 따옴표 안의 YOUR_GOOGLE_MAPS_API_KEY 를 지우고
+    //   Google에서 받은 키(AIza로 시작)를 붙여 넣으세요.
+    //   지도·장소 정보·주변 찾기·대중교통 경로·날씨가 모두 이 키 하나로 작동해요.
+    // ============================================================
+    const GOOGLE_MAPS_API_KEY = 'AIzaSyD7CafbOq9VndlQSfOj4kIg7vVHFUofhls';
+
+    const KOREA_BOUNDS = { south: 33.0, west: 124.5, north: 38.7, east: 131.0 };
+    const PLACE_FIELDS = ['id', 'displayName', 'formattedAddress', 'location', 'googleMapsURI',
+      'regularOpeningHours', 'utcOffsetMinutes', 'businessStatus', 'rating', 'userRatingCount', 'photos'];
+
+    // ---------- 언어 ----------
+    const LANGS = { en: 'en', ko: 'ko', ja: 'ja', zh: 'zh-CN' }; // Google에 보낼 언어 코드
+
+    function pickLang() {
+      const fromUrl = new URLSearchParams(location.search).get('lang');
+      if (LANGS[fromUrl]) return fromUrl;
+      try {
+        const saved = localStorage.getItem('genieLang');
+        if (LANGS[saved]) return saved;
+      } catch (e) {}
+      const nav = (navigator.language || 'en').slice(0, 2);
+      return LANGS[nav] ? nav : 'en';
+    }
+    const LANG = pickLang();
+    const LANG_CODE = LANGS[LANG];
+
+    const TEXT = {
+      en: {
+        heroTitle: 'Discover Korea, one course at a time',
+        allKorea: 'All of Korea',
+        weatherAt: n => `Now in ${n}`,
+        hiLo: (h, l) => `H ${h}° · L ${l}°`,
+        cats: { courses: 'Courses', planner: 'Trip planner', attraction: 'Sights', restaurant: 'Restaurants', cafe: 'Cafés', lodging: 'Hotels', parking: 'Parking', ev: 'EV charging', mine: 'My trip' },
+        ctaTitle: 'Plan my trip automatically',
+        ctaText: 'Pick a region and length — get a day-by-day plan',
+        planTitle: 'Auto trip planner',
+        planHint: 'Pick a region and trip length. Genie Map combines its featured sights with nearby restaurants and cafés from Google into a day-by-day plan.',
+        planRegion: 'Where to?',
+        planLength: 'How long?',
+        lengths: ['Day trip', '2 days (1 night)', '3 days (2 nights)'],
+        lengthShort: ['Day trip', '1N 2D', '2N 3D'],
+        makePlan: 'Make my plan',
+        planning: 'Building your plan… (finding nearby restaurants and cafés on Google)',
+        planFor: (r, len) => `${len} in ${r}`,
+        planCount: (n, a, f, c) => `${n} places: ${a} sights · ${f} restaurants · ${c} cafés`,
+        planArea: r => `Region: ${r}`,
+        planDist: d => `About ${d} between stops (straight line)`,
+        dayN: n => `Day ${n}`,
+        kinds: { sight: 'Sight', restaurant: 'Restaurant', cafe: 'Café' },
+        meals: { lunch: 'Lunch', cafe: 'Coffee break', dinner: 'Dinner' },
+        nearParking: 'Parking nearby',
+        remake: 'Change region or length',
+        planNote: 'Restaurants and cafés are picked automatically near each sight by Google rating and review count. Check opening hours before you go.',
+        foodNone: 'Nothing found nearby',
+        googlePhoto: 'Photo from Google',
+        examplePhoto: 'Example photo',
+        exampleTip: 'A mood photo for this category — not a photo of the places listed below.',
+        chooseCourse: 'Choose a travel course',
+        stops: n => `${n} stops`,
+        courseCount: n => n === 1 ? '1 course' : `${n} courses`,
+        back: '← All courses',
+        loading: 'Loading from Google…',
+        placeError: "Couldn't load this place from Google.",
+        routeLoading: 'Finding a transit route…',
+        routeNone: 'No transit route found right now.',
+        routeError: "Couldn't load the route.",
+        total: 'Total transit time between stops',
+        totalPartial: 'Some routes could not be loaded.',
+        openGoogle: 'Google Maps',
+        directions: 'Directions',
+        openNow: 'Open now', closedNow: 'Closed now',
+        tip: 'Tip',
+        stay: h => `Stay about ${h} h`,
+        reviews: n => `(${n.toLocaleString()})`,
+        walk: 'Walk',
+        dur: (h, m) => [h && `${h} h`, m && `${m} min`].filter(Boolean).join(' '),
+        transitNote: 'In Korea, Google Maps provides public-transit directions only (no walking or driving routes). For walking routes, use the Naver Map button.',
+        searchPlaceholder: 'Search places in Korea (e.g. Jeonju Hanok Village)',
+        searchBtn: 'Search',
+        searchTitle: q => `Results for "${q}"`,
+        searchHint: 'Live results from Google Places.',
+        searchEmpty: 'No places found. Try different words.',
+        searchError: 'Search failed. Please try again in a moment.',
+        searching: 'Searching…',
+        nearbyTitle: c => `${c} around the map`,
+        nearbyHint: 'Move the map and tap "Search this area" to look somewhere else.',
+        nearbyEmpty: 'Nothing found around here. Try moving the map.',
+        researchHere: 'Search this area',
+        mineTitle: 'My trip · Saved places',
+        mineHint: 'Saved places are kept in this browser only.',
+        mineEmpty: 'No saved places yet. Tap ♡ on a place to save it.',
+        save: 'Save', unsave: 'Remove from My trip',
+        savedToast: 'Saved to My trip ♥', removedToast: 'Removed from My trip',
+        fromMe: d => `${d} from you`,
+        myLocation: 'My location',
+        locError: "Couldn't get your location. Please allow location access in your browser.",
+        naver: 'Naver Map', tmap: 'TMAP',
+        naverTitle: 'Transit & walking directions in the Naver Map app',
+        tmapTitle: 'Driving directions in the TMAP app',
+        tmapPhone: 'TMAP opens on a phone with the TMAP app installed.',
+        keyTitle: 'API key needed', keyText: 'Add your Google Maps API key in index.html to show the map, places and routes.',
+        authTitle: "Map couldn't load", authText: 'The API key is not valid, or this API is not available for the key.',
+        loadText: 'Check your internet connection and reload the page.',
+        photoCredits: 'Photo credits',
+        footer: 'Photos: free-licensed images from Wikimedia Commons. Place info, routes and weather: Google Maps Platform. Opening hours can change — check before you go.'
+      },
+      ko: {
+        heroTitle: '한국 여행, 코스로 쉽게',
+        allKorea: '대한민국 전체',
+        weatherAt: n => `${n} 현재 날씨`,
+        hiLo: (h, l) => `최고 ${h}° | 최저 ${l}°`,
+        cats: { courses: '여행코스', planner: '일정 추천', attraction: '관광명소', restaurant: '음식점', cafe: '카페', lodging: '숙소', parking: '주차장', ev: '전기차 충전', mine: '내 여행' },
+        ctaTitle: '며칠 여행하세요? 일정을 자동으로 짜 드려요',
+        ctaText: '지역과 기간만 고르면 날짜별 일정 완성',
+        planTitle: '자동 추천 일정',
+        planHint: '지역과 기간을 고르면 지니맵 명소에 Google에서 찾은 근처 맛집·카페를 더해 날짜별 일정을 만들어요.',
+        planRegion: '어디로 갈까요?',
+        planLength: '며칠 동안?',
+        lengths: ['당일 여행', '1박 2일', '2박 3일'],
+        lengthShort: ['당일', '1박2일', '2박3일'],
+        makePlan: '일정 만들기',
+        planning: '일정을 만드는 중… (Google에서 근처 맛집·카페를 찾고 있어요)',
+        planFor: (r, len) => `${r} ${len} 자동 추천 일정`,
+        planCount: (n, a, f, c) => `총 ${n}곳: 여행지 ${a} · 음식점 ${f} · 카페 ${c}`,
+        planArea: r => `여행 지역: ${r}`,
+        planDist: d => `장소 사이 직선거리 합계 약 ${d}`,
+        dayN: n => `${n}일차`,
+        kinds: { sight: '여행지', restaurant: '음식점', cafe: '카페' },
+        meals: { lunch: '점심', cafe: '카페 타임', dinner: '저녁' },
+        nearParking: '주변 주차장',
+        remake: '지역·기간 바꾸기',
+        planNote: '음식점·카페는 Google 평점과 리뷰 수를 보고 명소 가까운 곳으로 자동으로 골라요. 방문 전 영업시간을 꼭 확인하세요.',
+        foodNone: '근처에서 찾지 못했어요',
+        googlePhoto: 'Google 제공 사진',
+        examplePhoto: '예시 사진',
+        exampleTip: '분위기를 보여 주는 예시 사진이에요. 아래 목록에 나온 가게의 실제 사진이 아니에요.',
+        chooseCourse: '여행 코스를 골라 보세요',
+        stops: n => `${n}곳`,
+        courseCount: n => `코스 ${n}개`,
+        back: '← 전체 코스',
+        loading: 'Google에서 불러오는 중…',
+        placeError: 'Google에서 이 장소를 불러오지 못했어요.',
+        routeLoading: '대중교통 경로를 찾는 중…',
+        routeNone: '지금은 대중교통 경로가 없어요.',
+        routeError: '경로를 불러오지 못했어요.',
+        total: '장소 사이 대중교통 이동 시간 합계',
+        totalPartial: '일부 경로를 불러오지 못했어요.',
+        openGoogle: 'Google 지도',
+        directions: '길찾기',
+        openNow: '영업 중', closedNow: '영업 종료',
+        tip: '팁',
+        stay: h => `약 ${h}시간 머물기`,
+        reviews: n => `(${n.toLocaleString()})`,
+        walk: '도보',
+        dur: (h, m) => [h && `${h}시간`, m && `${m}분`].filter(Boolean).join(' '),
+        transitNote: '한국에서는 Google 지도가 대중교통 길찾기만 제공해요(도보·자동차 경로 없음). 걸어서 가는 길은 네이버 지도 버튼을 눌러 보세요.',
+        searchPlaceholder: '한국의 장소를 검색해 보세요 (예: 전주 한옥마을)',
+        searchBtn: '검색',
+        searchTitle: q => `"${q}" 검색 결과`,
+        searchHint: 'Google 장소 정보에서 실시간으로 가져와요.',
+        searchEmpty: '장소를 찾지 못했어요. 다른 말로 검색해 보세요.',
+        searchError: '검색에 실패했어요. 잠시 뒤 다시 해 보세요.',
+        searching: '검색하는 중…',
+        nearbyTitle: c => `지도 주변 ${c}`,
+        nearbyHint: '지도를 옮긴 뒤 "이 지역에서 다시 찾기"를 누르면 그 주변을 찾아요.',
+        nearbyEmpty: '이 주변에서 찾지 못했어요. 지도를 옮겨 보세요.',
+        researchHere: '이 지역에서 다시 찾기',
+        mineTitle: '내 여행 · 찜한 장소',
+        mineHint: '찜 목록은 이 브라우저에만 저장돼요.',
+        mineEmpty: '아직 찜한 장소가 없어요. 장소의 ♡를 눌러 담아 보세요.',
+        save: '찜하기', unsave: '내 여행에서 빼기',
+        savedToast: '내 여행에 담았어요 ♥', removedToast: '내 여행에서 뺐어요',
+        fromMe: d => `내 위치에서 ${d}`,
+        myLocation: '내 위치',
+        locError: '위치를 가져올 수 없어요. 브라우저의 위치 권한을 허용해 주세요.',
+        naver: '네이버 지도', tmap: '티맵',
+        naverTitle: '네이버 지도 앱에서 대중교통·도보 길찾기',
+        tmapTitle: '티맵 앱에서 자동차 길안내',
+        tmapPhone: '티맵은 티맵 앱이 설치된 휴대폰에서 열려요.',
+        keyTitle: 'API 키가 필요해요', keyText: 'index.html에 Google Maps API 키를 넣으면 지도와 장소, 경로가 나타나요.',
+        authTitle: '지도를 불러올 수 없어요', authText: 'API 키가 맞지 않거나, 이 키로 쓸 수 없는 기능이에요.',
+        loadText: '인터넷 연결을 확인하고 새로고침해 주세요.',
+        photoCredits: '사진 출처',
+        footer: '사진: Wikimedia Commons의 자유 이용 사진. 장소 정보·경로·날씨: Google Maps Platform. 영업시간은 바뀔 수 있으니 방문 전에 확인하세요.'
+      },
+      ja: {
+        heroTitle: '韓国旅行を、コースでかんたんに',
+        allKorea: '韓国全体',
+        weatherAt: n => `${n}の現在の天気`,
+        hiLo: (h, l) => `最高 ${h}° | 最低 ${l}°`,
+        cats: { courses: '旅行コース', planner: 'プラン作成', attraction: '観光名所', restaurant: 'レストラン', cafe: 'カフェ', lodging: '宿泊', parking: '駐車場', ev: 'EV充電', mine: 'マイ旅行' },
+        ctaTitle: '何日間の旅行?プランを自動で作ります',
+        ctaText: '地域と日数を選ぶだけで日別プランが完成',
+        planTitle: '自動おすすめプラン',
+        planHint: '地域と日数を選ぶと、ジニマップのおすすめスポットにGoogleで見つけた近くのグルメ・カフェを加えて日別プランを作ります。',
+        planRegion: 'どこへ行きますか?',
+        planLength: '何日間?',
+        lengths: ['日帰り', '1泊2日', '2泊3日'],
+        lengthShort: ['日帰り', '1泊2日', '2泊3日'],
+        makePlan: 'プランを作る',
+        planning: 'プラン作成中…(Googleで近くのグルメ・カフェを検索中)',
+        planFor: (r, len) => `${r} ${len}の自動おすすめプラン`,
+        planCount: (n, a, f, c) => `計${n}か所:観光${a}・グルメ${f}・カフェ${c}`,
+        planArea: r => `旅行地域:${r}`,
+        planDist: d => `スポット間の直線距離 合計 約${d}`,
+        dayN: n => `${n}日目`,
+        kinds: { sight: '観光', restaurant: 'グルメ', cafe: 'カフェ' },
+        meals: { lunch: 'ランチ', cafe: 'カフェタイム', dinner: 'ディナー' },
+        nearParking: '周辺の駐車場',
+        remake: '地域・日数を変える',
+        planNote: 'グルメ・カフェはGoogleの評価とレビュー数をもとに、スポットの近くから自動で選んでいます。訪問前に営業時間をご確認ください。',
+        foodNone: '近くで見つかりませんでした',
+        googlePhoto: 'Google提供の写真',
+        examplePhoto: 'イメージ写真',
+        exampleTip: '雰囲気を伝えるイメージ写真です。下のリストのお店の実際の写真ではありません。',
+        chooseCourse: '旅行コースを選んでください',
+        stops: n => `${n}か所`,
+        courseCount: n => `${n}コース`,
+        back: '← コース一覧',
+        loading: 'Googleから読み込み中…',
+        placeError: 'Googleからこのスポットを読み込めませんでした。',
+        routeLoading: '公共交通ルートを検索中…',
+        routeNone: '現在、公共交通ルートが見つかりません。',
+        routeError: 'ルートを読み込めませんでした。',
+        total: 'スポット間の公共交通 移動時間の合計',
+        totalPartial: '一部のルートを読み込めませんでした。',
+        openGoogle: 'Googleマップ',
+        directions: '経路',
+        openNow: '営業中', closedNow: '営業時間外',
+        tip: 'ヒント',
+        stay: h => `滞在 約${h}時間`,
+        reviews: n => `(${n.toLocaleString()})`,
+        walk: '徒歩',
+        dur: (h, m) => [h && `${h}時間`, m && `${m}分`].filter(Boolean).join(''),
+        transitNote: '韓国ではGoogleマップは公共交通の経路案内のみ対応しています(徒歩・車のルートなし)。徒歩ルートはNAVER Mapボタンをどうぞ。',
+        searchPlaceholder: '韓国のスポットを検索(例:全州韓屋村)',
+        searchBtn: '検索',
+        searchTitle: q => `「${q}」の検索結果`,
+        searchHint: 'Googleプレイスからリアルタイムで取得します。',
+        searchEmpty: 'スポットが見つかりません。別の言葉で検索してください。',
+        searchError: '検索に失敗しました。しばらくしてからもう一度お試しください。',
+        searching: '検索中…',
+        nearbyTitle: c => `地図周辺の${c}`,
+        nearbyHint: '地図を動かして「このエリアで再検索」を押すと、その周辺を探します。',
+        nearbyEmpty: 'この周辺では見つかりませんでした。地図を動かしてみてください。',
+        researchHere: 'このエリアで再検索',
+        mineTitle: 'マイ旅行・保存したスポット',
+        mineHint: '保存リストはこのブラウザにのみ保存されます。',
+        mineEmpty: 'まだ保存したスポットはありません。♡を押して保存しましょう。',
+        save: '保存', unsave: 'マイ旅行から削除',
+        savedToast: 'マイ旅行に保存しました ♥', removedToast: 'マイ旅行から削除しました',
+        fromMe: d => `現在地から${d}`,
+        myLocation: '現在地',
+        locError: '現在地を取得できません。ブラウザの位置情報を許可してください。',
+        naver: 'NAVER Map', tmap: 'TMAP',
+        naverTitle: 'NAVER Mapアプリで公共交通・徒歩ルート',
+        tmapTitle: 'TMAPアプリで車のナビ',
+        tmapPhone: 'TMAPはアプリが入ったスマホで開きます。',
+        keyTitle: 'APIキーが必要です', keyText: 'index.htmlにGoogle Maps APIキーを入れると、地図・スポット・ルートが表示されます。',
+        authTitle: '地図を読み込めません', authText: 'APIキーが正しくないか、このキーでは使えない機能です。',
+        loadText: 'インターネット接続を確認して、ページを再読み込みしてください。',
+        photoCredits: '写真提供',
+        footer: '写真:Wikimedia Commonsのフリーライセンス画像。スポット情報・ルート・天気:Google Maps Platform。営業時間は変わることがあるので、お出かけ前にご確認ください。'
+      },
+      zh: {
+        heroTitle: '按路线,轻松游韩国',
+        allKorea: '韩国全境',
+        weatherAt: n => `${n}当前天气`,
+        hiLo: (h, l) => `最高 ${h}° | 最低 ${l}°`,
+        cats: { courses: '旅行路线', planner: '行程推荐', attraction: '景点', restaurant: '餐厅', cafe: '咖啡馆', lodging: '住宿', parking: '停车场', ev: '电动车充电', mine: '我的旅行' },
+        ctaTitle: '玩几天?自动帮您安排行程',
+        ctaText: '选好地区和天数,每日行程一键生成',
+        planTitle: '自动推荐行程',
+        planHint: '选择地区和天数,地尼地图会把推荐景点和Google上附近的餐厅、咖啡馆组合成每日行程。',
+        planRegion: '去哪里?',
+        planLength: '玩几天?',
+        lengths: ['当日游', '两天一夜', '三天两夜'],
+        lengthShort: ['当日游', '两天一夜', '三天两夜'],
+        makePlan: '生成行程',
+        planning: '正在生成行程…(正在Google上查找附近的餐厅和咖啡馆)',
+        planFor: (r, len) => `${r}${len}自动推荐行程`,
+        planCount: (n, a, f, c) => `共${n}处:景点${a} · 餐厅${f} · 咖啡馆${c}`,
+        planArea: r => `旅行地区:${r}`,
+        planDist: d => `景点间直线距离合计约${d}`,
+        dayN: n => `第${n}天`,
+        kinds: { sight: '景点', restaurant: '餐厅', cafe: '咖啡馆' },
+        meals: { lunch: '午餐', cafe: '咖啡时间', dinner: '晚餐' },
+        nearParking: '附近停车场',
+        remake: '修改地区或天数',
+        planNote: '餐厅和咖啡馆根据Google评分和评论数,自动从景点附近选出。出发前请确认营业时间。',
+        foodNone: '附近未找到',
+        googlePhoto: 'Google提供的图片',
+        examplePhoto: '示例图片',
+        exampleTip: '这是展示氛围的示例图片,并非下方列表中店铺的实际照片。',
+        chooseCourse: '请选择旅行路线',
+        stops: n => `${n}个景点`,
+        courseCount: n => `${n}条路线`,
+        back: '← 全部路线',
+        loading: '正在从Google加载…',
+        placeError: '无法从Google加载此地点。',
+        routeLoading: '正在查找公共交通路线…',
+        routeNone: '目前没有可用的公共交通路线。',
+        routeError: '无法加载路线。',
+        total: '景点之间公共交通总时长',
+        totalPartial: '部分路线无法加载。',
+        openGoogle: 'Google地图',
+        directions: '路线',
+        openNow: '营业中', closedNow: '已打烊',
+        tip: '小贴士',
+        stay: h => `建议停留约${h}小时`,
+        reviews: n => `(${n.toLocaleString()})`,
+        walk: '步行',
+        dur: (h, m) => [h && `${h}小时`, m && `${m}分钟`].filter(Boolean).join(''),
+        transitNote: '在韩国,Google地图只提供公共交通路线(不提供步行和驾车路线)。步行路线请点击Naver地图按钮。',
+        searchPlaceholder: '搜索韩国的地点(例如:全州韩屋村)',
+        searchBtn: '搜索',
+        searchTitle: q => `"${q}"的搜索结果`,
+        searchHint: '结果实时来自Google地点信息。',
+        searchEmpty: '未找到地点,请换个关键词试试。',
+        searchError: '搜索失败,请稍后再试。',
+        searching: '搜索中…',
+        nearbyTitle: c => `地图附近的${c}`,
+        nearbyHint: '移动地图后点击"搜索此区域",即可查找该区域附近。',
+        nearbyEmpty: '附近没有找到,请移动地图试试。',
+        researchHere: '搜索此区域',
+        mineTitle: '我的旅行·收藏的地点',
+        mineHint: '收藏列表仅保存在此浏览器中。',
+        mineEmpty: '还没有收藏的地点。点击地点上的♡即可收藏。',
+        save: '收藏', unsave: '从我的旅行中移除',
+        savedToast: '已收藏到我的旅行 ♥', removedToast: '已从我的旅行中移除',
+        fromMe: d => `距您${d}`,
+        myLocation: '我的位置',
+        locError: '无法获取您的位置,请在浏览器中允许位置权限。',
+        naver: 'Naver地图', tmap: 'TMAP',
+        naverTitle: '在Naver地图应用中查看公共交通和步行路线',
+        tmapTitle: '在TMAP应用中进行驾车导航',
+        tmapPhone: 'TMAP需要在安装了该应用的手机上打开。',
+        keyTitle: '需要API密钥', keyText: '在index.html中填入Google Maps API密钥后,即可显示地图、地点和路线。',
+        authTitle: '无法加载地图', authText: 'API密钥不正确,或此密钥不支持该功能。',
+        loadText: '请检查网络连接后刷新页面。',
+        photoCredits: '图片来源',
+        footer: '图片:来自Wikimedia Commons的自由授权图片。地点信息、路线和天气:Google Maps Platform。营业时间可能变动,出发前请确认。'
+      }
+    };
+    const T = TEXT[LANG];
+
+    // ---------- 명소 사진 (Wikimedia Commons, 자유 이용 사진 · 출처 표시) ----------
+    const WM = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/';
+    const CM = 'https://commons.wikimedia.org/wiki/File:';
+    const PHOTOS = {
+      gyeongbokgung: { src: WM + '6/63/%EA%B4%91%ED%99%94%EB%AC%B8_%EC%9B%94%EB%8C%80.jpg/960px-%EA%B4%91%ED%99%94%EB%AC%B8_%EC%9B%94%EB%8C%80.jpg', page: CM + '%EA%B4%91%ED%99%94%EB%AC%B8_%EC%9B%94%EB%8C%80.jpg', by: '서울관광 아카이브', lic: 'KOGL Type 1' },
+      bukchon: { src: WM + '2/2e/Bukchon_Hanok_Village_01.jpg/960px-Bukchon_Hanok_Village_01.jpg', page: CM + 'Bukchon_Hanok_Village_01.jpg', by: 'Bgag', lic: 'CC0' },
+      changdeokgung: { src: WM + 'd/d4/%EC%B0%BD%EB%8D%95%EA%B6%81_%EC%A0%84%EA%B2%BD_%282012%29.jpg/960px-%EC%B0%BD%EB%8D%95%EA%B6%81_%EC%A0%84%EA%B2%BD_%282012%29.jpg', page: CM + '%EC%B0%BD%EB%8D%95%EA%B6%81_%EC%A0%84%EA%B2%BD_(2012).jpg', by: '문화재청', lic: 'KOGL Type 1' },
+      insadong: { src: WM + '0/00/Insa-dong_%EC%9D%B8%EC%82%AC%EB%8F%99_October_1_2020_20.jpg/960px-Insa-dong_%EC%9D%B8%EC%82%AC%EB%8F%99_October_1_2020_20.jpg', page: CM + 'Insa-dong_%EC%9D%B8%EC%82%AC%EB%8F%99_October_1_2020_20.jpg', by: 'S h y numis', lic: 'CC BY-SA 4.0' },
+      myeongdong: { src: WM + '3/32/%EB%AA%85%EB%8F%998%EA%B8%B8_%EA%B1%B0%EB%A6%AC_%282020.03%29.jpg/960px-%EB%AA%85%EB%8F%998%EA%B8%B8_%EA%B1%B0%EB%A6%AC_%282020.03%29.jpg', page: CM + '%EB%AA%85%EB%8F%998%EA%B8%B8_%EA%B1%B0%EB%A6%AC_(2020.03).jpg', by: '서울연구데이터서비스', lic: 'KOGL Type 1' },
+      nseoultower: { src: WM + '3/3a/N_Seoul_Tower_view_2.jpg/960px-N_Seoul_Tower_view_2.jpg', page: CM + 'N_Seoul_Tower_view_2.jpg', by: 'kallerna', lic: 'CC BY-SA 4.0' },
+      ddp: { src: WM + '8/8f/Dongdaemun_Design_Plaza_at_night%2C_Seoul%2C_Korea.jpg/960px-Dongdaemun_Design_Plaza_at_night%2C_Seoul%2C_Korea.jpg', page: CM + 'Dongdaemun_Design_Plaza_at_night,_Seoul,_Korea.jpg', by: 'Eugene Lim', lic: 'CC BY 2.0' },
+      seoulforest: { src: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/SeoulForest.jpg', page: CM + 'SeoulForest.jpg', by: 'JeongAhn', lic: 'Public domain' },
+      gwangjang: { src: WM + '9/94/Gwangjang_Market%2C_Seoul_01.jpg/960px-Gwangjang_Market%2C_Seoul_01.jpg', page: CM + 'Gwangjang_Market,_Seoul_01.jpg', by: 'Bgag', lic: 'CC0' },
+      cheonggyecheon: { src: WM + '4/4a/Cheonggyecheon_stream_at_sunrise_with_trees_in_Seoul.jpg/960px-Cheonggyecheon_stream_at_sunrise_with_trees_in_Seoul.jpg', page: CM + 'Cheonggyecheon_stream_at_sunrise_with_trees_in_Seoul.jpg', by: 'Basile Morin', lic: 'CC BY-SA 4.0' },
+      banpo: { src: WM + '7/76/2011%EB%85%84_11%EC%9B%94_%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EB%AA%85%EC%86%8C_%28Seoul_best_attractions%29_%EB%8B%AC%EB%B9%9B%EB%AC%B4%EC%A7%80%EA%B0%9C%EB%B6%84%EC%88%981.jpg/960px-2011%EB%85%84_11%EC%9B%94_%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EB%AA%85%EC%86%8C_%28Seoul_best_attractions%29_%EB%8B%AC%EB%B9%9B%EB%AC%B4%EC%A7%80%EA%B0%9C%EB%B6%84%EC%88%981.jpg', page: CM + '2011%EB%85%84_11%EC%9B%94_%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C_%EB%AA%85%EC%86%8C_(Seoul_best_attractions)_%EB%8B%AC%EB%B9%9B%EB%AC%B4%EC%A7%80%EA%B0%9C%EB%B6%84%EC%88%981.jpg', by: '서울특별시 소방재난본부', lic: 'Public domain' },
+      lotteworldtower: { src: WM + '1/18/Lotte_World_Tower_near_Cheongdam_Bridge.jpg/960px-Lotte_World_Tower_near_Cheongdam_Bridge.jpg', page: CM + 'Lotte_World_Tower_near_Cheongdam_Bridge.jpg', by: 'Ox1997cow', lic: 'CC BY 3.0' },
+      gamcheon: { src: WM + 'e/ee/Gamcheon_Houses%2C_2024.jpg/960px-Gamcheon_Houses%2C_2024.jpg', page: CM + 'Gamcheon_Houses,_2024.jpg', by: 'Bl00dnFl4mes', lic: 'CC BY-SA 4.0' },
+      jagalchi: { src: WM + 'd/d4/Jagalchi_Market_20200523_019.jpg/960px-Jagalchi_Market_20200523_019.jpg', page: CM + 'Jagalchi_Market_20200523_019.jpg', by: 'Mobius6', lic: 'CC BY-SA 4.0' },
+      haeundae: { src: WM + 'e/ea/Haeundae_Beach_May_2024.jpg/960px-Haeundae_Beach_May_2024.jpg', page: CM + 'Haeundae_Beach_May_2024.jpg', by: 'Brit in Seoul', lic: 'CC BY-SA 4.0' },
+      gwangalli: { src: WM + '1/17/Gwangalli_Beach.jpg/960px-Gwangalli_Beach.jpg', page: CM + 'Gwangalli_Beach.jpg', by: 'Chelsea Hicks', lic: 'CC BY 2.0' },
+      bulguksa: { src: WM + 'e/eb/Lotus_Flower_Bridge_and_Seven_Treasure_Bridge_at_Bulguksa_in_Gyeongju%2C_Korea.jpg/960px-Lotus_Flower_Bridge_and_Seven_Treasure_Bridge_at_Bulguksa_in_Gyeongju%2C_Korea.jpg', page: CM + 'Lotus_Flower_Bridge_and_Seven_Treasure_Bridge_at_Bulguksa_in_Gyeongju,_Korea.jpg', by: 'Unknown author', lic: 'Public domain' },
+      gjmuseum: { src: WM + 'a/a8/Korea-Gyeongju.National.Museum-02.jpg/960px-Korea-Gyeongju.National.Museum-02.jpg', page: CM + 'Korea-Gyeongju.National.Museum-02.jpg', by: 'martinroell', lic: 'CC BY-SA 2.0' },
+      daereungwon: { src: WM + '2/26/Gyeongju_-_King_Tomb_Park_-_panoramio.jpg/960px-Gyeongju_-_King_Tomb_Park_-_panoramio.jpg', page: CM + 'Gyeongju_-_King_Tomb_Park_-_panoramio.jpg', by: 'dokaspar', lic: 'CC BY-SA 3.0' },
+      wolji: { src: WM + 'a/a7/Water_reflection_of_Donggung_Palace_in_Wolji_Pond_at_blue_hour_in_Gyeongju_South_Korea.jpg/960px-Water_reflection_of_Donggung_Palace_in_Wolji_Pond_at_blue_hour_in_Gyeongju_South_Korea.jpg', page: CM + 'Water_reflection_of_Donggung_Palace_in_Wolji_Pond_at_blue_hour_in_Gyeongju_South_Korea.jpg', by: 'Basile Morin', lic: 'CC BY-SA 4.0' },
+      seongsan: { src: WM + '6/61/Seongsan_Ilchulbong_from_the_air.jpg/960px-Seongsan_Ilchulbong_from_the_air.jpg', page: CM + 'Seongsan_Ilchulbong_from_the_air.jpg', by: 'Korea.net / KOCIS', lic: 'CC BY-SA 2.0' },
+      seopjikoji: { src: WM + '1/11/%EB%B0%94%EB%9E%8C%EC%9D%98_%EC%96%B8%EB%8D%95_%EC%84%AD%EC%A7%80%EC%BD%94%EC%A7%80_3.jpg/960px-%EB%B0%94%EB%9E%8C%EC%9D%98_%EC%96%B8%EB%8D%95_%EC%84%AD%EC%A7%80%EC%BD%94%EC%A7%80_3.jpg', page: CM + '%EB%B0%94%EB%9E%8C%EC%9D%98_%EC%96%B8%EB%8D%95_%EC%84%AD%EC%A7%80%EC%BD%94%EC%A7%80_3.jpg', by: 'SEUNGMIN WOO', lic: 'CC BY-SA 3.0' },
+      woljeongri: { src: WM + 'd/d1/Jeju_woljeongri_beach_1.jpg/960px-Jeju_woljeongri_beach_1.jpg', page: CM + 'Jeju_woljeongri_beach_1.jpg', by: 'Sgroey', lic: 'CC BY-SA 4.0' },
+      hamdeok: { src: WM + '5/52/Hamdeok_Beach_May_2026_04.jpg/960px-Hamdeok_Beach_May_2026_04.jpg', page: CM + 'Hamdeok_Beach_May_2026_04.jpg', by: 'Grapesurgeon', lic: 'CC BY-SA 4.0' },
+      songdo: { src: WM + 'c/c2/Songdo_Beach_Area_and_Namhang_Bridge_in_Busan.jpg/960px-Songdo_Beach_Area_and_Namhang_Bridge_in_Busan.jpg', page: CM + 'Songdo_Beach_Area_and_Namhang_Bridge_in_Busan.jpg', by: 'S h y numis', lic: 'CC BY 4.0' },
+      huinnyeoul: { src: WM + '0/03/Huinnyeoul_culture_village%2C_Busan_on_October_25th%2C_2019.jpg/960px-Huinnyeoul_culture_village%2C_Busan_on_October_25th%2C_2019.jpg', page: CM + 'Huinnyeoul_culture_village,_Busan_on_October_25th,_2019.jpg', by: 'Choi2451', lic: 'CC0' },
+      taejongdae: { src: WM + '4/47/Korea-Busan-Taejongdae-03.jpg/960px-Korea-Busan-Taejongdae-03.jpg', page: CM + 'Korea-Busan-Taejongdae-03.jpg', by: '*intacto', lic: 'CC BY 2.0' },
+      yongdusan: { src: WM + '3/32/Busan_Tower_and_Yongdusan_Park_20200522_003.jpg/960px-Busan_Tower_and_Yongdusan_Park_20200522_003.jpg', page: CM + 'Busan_Tower_and_Yongdusan_Park_20200522_003.jpg', by: 'Mobius6', lic: 'CC BY-SA 4.0' },
+      haedong: { src: WM + '6/6f/%ED%95%B4%EB%8F%99%EC%9A%A9%EA%B6%81%EC%82%AC_%EC%82%AC%EC%B0%B0_%EC%A0%84%EA%B2%BD.jpg/960px-%ED%95%B4%EB%8F%99%EC%9A%A9%EA%B6%81%EC%82%AC_%EC%82%AC%EC%B0%B0_%EC%A0%84%EA%B2%BD.jpg', page: CM + '%ED%95%B4%EB%8F%99%EC%9A%A9%EA%B6%81%EC%82%AC_%EC%82%AC%EC%B0%B0_%EC%A0%84%EA%B2%BD.jpg', by: '박혜민', lic: 'CC BY-SA 3.0' },
+      cheomseongdae: { src: WM + 'd/d4/Cheomseongdae_Observatory_under_blue_sky_in_Gyeongju_South_Korea.jpg/960px-Cheomseongdae_Observatory_under_blue_sky_in_Gyeongju_South_Korea.jpg', page: CM + 'Cheomseongdae_Observatory_under_blue_sky_in_Gyeongju_South_Korea.jpg', by: 'Basile Morin', lic: 'CC BY-SA 4.0' },
+      seokguram: { src: WM + 'f/fb/Front_view_of_Seokguram_from_front_chamber.jpg/960px-Front_view_of_Seokguram_from_front_chamber.jpg', page: CM + 'Front_view_of_Seokguram_from_front_chamber.jpg', by: 'Seok-Hong, Han', lic: 'KOGL Type 1' },
+      gyochon: { src: WM + '5/51/House_of_the_Gyeongju_Choe_Clan.jpg/960px-House_of_the_Gyeongju_Choe_Clan.jpg', page: CM + 'House_of_the_Gyeongju_Choe_Clan.jpg', by: 'Christophe95', lic: 'CC BY-SA 4.0' },
+      woljeonggyo: { src: WM + 'b/b1/%E6%9C%88%E7%B2%BE%E6%A9%8B%2C_%E6%85%B6%E5%B7%9E%2C_%E5%BE%90%E7%BE%85%E4%BC%90%2C_%E9%9F%93%E5%9C%8B%2C_%E5%8D%97%E9%9F%93%2C_%E5%A4%A7%E9%9F%93%E6%B0%91%E5%9C%8B%2C_Woljeonggyo_Bridge%2C_Gyeongju%2C_South_Korea%2C_Republic_of_Korea%2C_ROK%2C_Daehan_Minguk%2C_%EC%9B%94%EC%A0%95%EA%B5%90%2C_%EA%B2%BD%EC%A3%BC%EC%8B%9C%2C_%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_%2845024173294%29.jpg/960px-thumbnail.jpg', page: CM + '%E6%9C%88%E7%B2%BE%E6%A9%8B,_%E6%85%B6%E5%B7%9E,_%E5%BE%90%E7%BE%85%E4%BC%90,_%E9%9F%93%E5%9C%8B,_%E5%8D%97%E9%9F%93,_%E5%A4%A7%E9%9F%93%E6%B0%91%E5%9C%8B,_Woljeonggyo_Bridge,_Gyeongju,_South_Korea,_Republic_of_Korea,_ROK,_Daehan_Minguk,_%EC%9B%94%EC%A0%95%EA%B5%90,_%EA%B2%BD%EC%A3%BC%EC%8B%9C,_%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD_(45024173294).jpg', by: 'bryan...', lic: 'CC BY-SA 2.0' },
+      hwangnidan: { src: WM + 'c/c2/Hwangnidan-gil_02.jpg/960px-Hwangnidan-gil_02.jpg', page: CM + 'Hwangnidan-gil_02.jpg', by: 'Seefooddiet', lic: 'CC BY-SA 4.0' },
+      osulloc: { src: WM + '4/4f/Osulloc_Tea_Museum_%26_Fields%2C_Jeju.jpg/960px-Osulloc_Tea_Museum_%26_Fields%2C_Jeju.jpg', page: CM + 'Osulloc_Tea_Museum_%26_Fields,_Jeju.jpg', by: 'Matt Kieffer', lic: 'CC BY-SA 2.0' },
+      jusangjeolli: { src: WM + 'd/d1/Daepo_Jusangjeolli_Cliff_02.jpg/960px-Daepo_Jusangjeolli_Cliff_02.jpg', page: CM + 'Daepo_Jusangjeolli_Cliff_02.jpg', by: 'Bernard Gagnon', lic: 'CC0' },
+      cheonjiyeon: { src: WM + '6/68/Korea-Jeju-Cheonjiyeon_Waterfall-01.jpg/960px-Korea-Jeju-Cheonjiyeon_Waterfall-01.jpg', page: CM + 'Korea-Jeju-Cheonjiyeon_Waterfall-01.jpg', by: 'Martin Chen', lic: 'CC BY 2.0' },
+      hyeopjae: { src: WM + 'c/c9/Hyeopjae.jpg/960px-Hyeopjae.jpg', page: CM + 'Hyeopjae.jpg', by: 'Lcarrion88', lic: 'CC BY-SA 4.0' },
+      dongmun: { src: WM + '7/7a/Jeju_dongmun_market_1.JPG/960px-Jeju_dongmun_market_1.JPG', page: CM + 'Jeju_dongmun_market_1.JPG', by: 'thddbwnd', lic: 'CC BY 3.0' }
+    };
+
+    // 카테고리 분위기 사진 (목록 위 띠에만 "예시 사진"으로 표시 — 각 가게 사진으로는 쓰지 않아요)
+    const CAT_PHOTOS = {
+      restaurant: { src: WM + '9/97/Laid_table_in_Seoul%2C_South_Korea.jpg/960px-Laid_table_in_Seoul%2C_South_Korea.jpg', page: CM + 'Laid_table_in_Seoul,_South_Korea.jpg', by: 'Korea.net / KOCIS', lic: 'CC BY-SA 2.0' },
+      cafe: { src: WM + 'a/a8/Flowery_cafe_in_Seongsu-dong.jpg/960px-Flowery_cafe_in_Seongsu-dong.jpg', page: CM + 'Flowery_cafe_in_Seongsu-dong.jpg', by: 'CartoonChess', lic: 'CC BY-SA 4.0' },
+      lodging: { src: WM + '7/72/Hanok_stay_at_%22Myeongcheon_Hanok%22_%284458643165%29.jpg/960px-Hanok_stay_at_%22Myeongcheon_Hanok%22_%284458643165%29.jpg', page: CM + 'Hanok_stay_at_%22Myeongcheon_Hanok%22_(4458643165).jpg', by: 'Korea.net / KOCIS', lic: 'CC BY-SA 2.0' },
+      parking: { src: WM + '5/5b/Seoul_Ring_Expwy_GuriNamyangju_TGPA_Parkinglot_1.jpg/960px-Seoul_Ring_Expwy_GuriNamyangju_TGPA_Parkinglot_1.jpg', page: CM + 'Seoul_Ring_Expwy_GuriNamyangju_TGPA_Parkinglot_1.jpg', by: 'Jhcbs1019', lic: 'CC BY-SA 4.0' },
+      ev: { src: WM + '2/21/EV_charging_station%2C_Seogwipo%2C_Jeju_Island%2C_South_Korea_%2851645091087%29.jpg/960px-EV_charging_station%2C_Seogwipo%2C_Jeju_Island%2C_South_Korea_%2851645091087%29.jpg', page: CM + 'EV_charging_station,_Seogwipo,_Jeju_Island,_South_Korea_(51645091087).jpg', by: 'Sharon Hahn Darlin', lic: 'CC BY 2.0' }
+    };
+    CAT_PHOTOS.attraction = PHOTOS.changdeokgung;
+
+    // ---------- 여행 코스 (지니맵이 고른 코스와 여행 팁) ----------
+    // 장소의 좌표·주소·영업시간·평점은 적지 않고, Google Places에서 실시간으로 가져와요.
+    const COURSES = [
+      {
+        region: 'seoul', color: '#f0544f', cover: 'gyeongbokgung',
+        name: { en: 'Royal Seoul: Palaces & Hanok', ko: '왕궁과 한옥 산책', ja: '王宮と韓屋さんぽ', zh: '王宫与韩屋漫步' },
+        desc: {
+          en: 'Walk through 600 years of Joseon history, from grand palaces to quiet hanok alleys.',
+          ko: '웅장한 궁궐부터 조용한 한옥 골목까지, 조선 600년 역사를 걸어요.',
+          ja: '壮大な王宮から静かな韓屋の路地まで、朝鮮王朝600年の歴史を歩きます。',
+          zh: '从宏伟的王宫到宁静的韩屋小巷,漫步朝鲜王朝600年历史。'
+        },
+        time: { en: 'Full day', ko: '하루 코스', ja: '1日コース', zh: '一日游' },
+        stops: [
+          { query: 'Gyeongbokgung Palace, Seoul', photo: 'gyeongbokgung', stay: 2, tip: {
+            en: 'Wear a hanbok and you get in free. Catch the royal guard-changing ceremony at Gwanghwamun Gate.',
+            ko: '한복을 입으면 무료로 들어갈 수 있어요. 광화문 앞 수문장 교대식도 꼭 보세요.',
+            ja: '韓服を着ると入場無料。光化門の守門将交代式もお見逃しなく。',
+            zh: '穿韩服可免费入场。别错过光化门前的守门将换岗仪式。' } },
+          { query: 'Bukchon Hanok Village, Seoul', photo: 'bukchon', stay: 1, tip: {
+            en: 'People live in these hanok houses — please keep your voice down. Some areas limit tourist visits to 10:00–17:00.',
+            ko: '실제 주민이 사는 마을이라 조용히 둘러봐 주세요. 일부 구역은 관광객 방문 시간이 10:00~17:00로 정해져 있어요.',
+            ja: '住民が暮らす町なので静かに見学しましょう。一部エリアは観光客の訪問が10:00〜17:00に限られます。',
+            zh: '这里有居民生活,请保持安静。部分区域游客参观时间限定为10:00–17:00。' } },
+          { query: 'Changdeokgung Palace, Seoul', photo: 'changdeokgung', stay: 1.5, tip: {
+            en: 'The Secret Garden (Huwon) needs a separate guided-tour ticket — book early.',
+            ko: '후원(비원)은 별도 해설 관람 예약이 필요해요. 미리 예약하세요.',
+            ja: '秘苑(後苑)は別途ガイドツアーの予約が必要です。早めに予約を。',
+            zh: '后苑(秘苑)需另购导览门票,建议提前预约。' } },
+          { query: 'Insadong, Seoul', photo: 'insadong', stay: 1.5, tip: {
+            en: "Perfect for traditional tea houses and handmade souvenirs. Don't miss Ssamziegil.",
+            ko: '전통 찻집과 공예 기념품 쇼핑에 딱이에요. 쌈지길도 들러 보세요.',
+            ja: '伝統茶屋や手作りのお土産探しに最適。サムジギルもぜひ。',
+            zh: '适合逛传统茶馆、买手工纪念品。别错过Ssamziegil。' } }
+        ]
+      },
+      {
+        region: 'seoul', color: '#3d6af2', cover: 'nseoultower',
+        name: { en: 'Trendy Seoul: K-Culture Hotspots', ko: '요즘 서울, K-컬처 명소', ja: 'いまどきソウル K-カルチャー名所', zh: '潮流首尔 K文化热点' },
+        desc: {
+          en: 'Shopping streets, city views and the café streets locals love.',
+          ko: '쇼핑 거리와 서울 전망, 요즘 뜨는 카페 거리까지.',
+          ja: 'ショッピング街、ソウルの絶景、話題のカフェ街まで。',
+          zh: '购物街、首尔全景,还有当地人喜爱的咖啡街。'
+        },
+        time: { en: 'Full day', ko: '하루 코스', ja: '1日コース', zh: '一日游' },
+        stops: [
+          { query: 'Myeongdong Shopping Street, Seoul', photo: 'myeongdong', stay: 2, tip: {
+            en: 'Street-food stalls open from late afternoon. Many cosmetics shops hand out free samples.',
+            ko: '오후 늦게부터 길거리 음식 노점이 열려요. 화장품 가게에서 샘플도 많이 받을 수 있어요.',
+            ja: '夕方から屋台がオープン。コスメショップでは無料サンプルももらえます。',
+            zh: '傍晚开始有街头小吃摊。很多化妆品店会送免费试用装。' } },
+          { query: 'N Seoul Tower', photo: 'nseoultower', stay: 1.5, tip: {
+            en: 'Ride the Namsan cable car or walk up the trail. Sunset is the best time for views.',
+            ko: '남산 케이블카를 타거나 산책로로 걸어 올라가요. 해 질 무렵 전망이 가장 멋져요.',
+            ja: '南山ケーブルカーか散策路で上ります。夕暮れ時の眺めが最高です。',
+            zh: '可乘坐南山缆车或沿步道上山。日落时分景色最美。' } },
+          { query: 'Dongdaemun Design Plaza, Seoul', photo: 'ddp', stay: 1, tip: {
+            en: 'A futuristic landmark designed by Zaha Hadid. The nearby fashion malls stay open late into the night.',
+            ko: '자하 하디드가 설계한 미래적인 건물이에요. 주변 패션몰은 밤늦게까지 문을 열어요.',
+            ja: 'ザハ・ハディド設計の近未来的な建物。周辺のファッションビルは深夜まで営業しています。',
+            zh: '扎哈·哈迪德设计的未来感建筑。附近的时装商场营业到深夜。' } },
+          { query: 'Seoul Forest Park', photo: 'seoulforest', stay: 1.5, tip: {
+            en: "Relax in the park, then explore Seongsu-dong next door — Seoul's trendiest café and pop-up street.",
+            ko: '공원에서 쉬고, 바로 옆 성수동의 카페·팝업스토어 거리도 둘러보세요.',
+            ja: '公園でひと休みしたら、隣の聖水洞へ。ソウルで今いちばん話題のカフェ・ポップアップ街です。',
+            zh: '在公园休息后,去旁边的圣水洞逛逛——首尔最潮的咖啡街和快闪店街。' } }
+        ]
+      },
+      {
+        region: 'seoul', color: '#7a5af8', cover: 'banpo',
+        name: { en: 'Seoul After Dark: Night Views & Street Food', ko: '서울의 밤, 야경과 먹거리', ja: '夜のソウル 夜景と屋台グルメ', zh: '首尔之夜 夜景与小吃' },
+        desc: {
+          en: 'Start with market food, then follow the lights to the Han River.',
+          ko: '시장 먹거리로 시작해 불빛을 따라 한강까지.',
+          ja: '市場グルメから始めて、光をたどって漢江へ。',
+          zh: '从市场美食开始,追随灯光走到汉江。'
+        },
+        time: { en: 'Afternoon – night', ko: '오후 ~ 밤', ja: '午後〜夜', zh: '下午至夜晚' },
+        stops: [
+          { query: 'Gwangjang Market, Seoul', photo: 'gwangjang', stay: 1.5, tip: {
+            en: 'Try bindaetteok (mung-bean pancake) and mayak gimbap. Bring some cash for the food stalls.',
+            ko: '빈대떡과 마약김밥을 꼭 맛보세요. 노점에서는 현금이 있으면 편해요.',
+            ja: 'ピンデトック(緑豆チヂミ)と麻薬キンパをぜひ。屋台では現金があると便利です。',
+            zh: '一定要尝尝绿豆煎饼和麻药紫菜包饭。小吃摊带些现金更方便。' } },
+          { query: 'Cheonggyecheon Stream, Seoul', photo: 'cheonggyecheon', stay: 1, tip: {
+            en: 'A stream walk right in the city center. It looks beautiful with the lights on at night.',
+            ko: '도심 한가운데를 흐르는 개천 산책로예요. 밤에 불이 켜지면 더 예뻐요.',
+            ja: '都心を流れる小川の遊歩道。夜のライトアップがきれいです。',
+            zh: '市中心的溪流步道,夜晚亮灯后格外美丽。' } },
+          { query: 'Banpo Hangang Park, Seoul', photo: 'banpo', stay: 1.5, tip: {
+            en: 'The Moonlight Rainbow Fountain usually runs April–October with evening shows. Try instant ramen from a riverside convenience store!',
+            ko: '달빛무지개분수는 보통 4~10월 저녁에 공연해요. 한강 편의점 라면도 꼭 먹어 보세요!',
+            ja: '月光レインボー噴水は例年4〜10月の夜に開催。漢江のコンビニでラーメンもぜひ!',
+            zh: '月光彩虹喷泉一般在4–10月晚间表演。一定要试试汉江边便利店的泡面!' } },
+          { query: 'Lotte World Tower Seoul Sky', photo: 'lotteworldtower', stay: 1.5, tip: {
+            en: 'The Seoul Sky observation deck (floors 117–123) offers a sweeping night view of the city.',
+            ko: '서울스카이 전망대(117~123층)에서 서울의 야경이 한눈에 펼쳐져요.',
+            ja: '展望台ソウルスカイ(117〜123階)からソウルの夜景を一望できます。',
+            zh: '首尔天空观景台(117–123层)可俯瞰首尔夜景。' } }
+        ]
+      },
+      {
+        region: 'busan', color: '#0ea5e9', cover: 'gamcheon',
+        name: { en: 'Busan: Colorful Villages & Ocean Views', ko: '부산, 알록달록 마을과 바다', ja: '釜山 カラフルな村と海の絶景', zh: '釜山 彩色村庄与海景' },
+        desc: {
+          en: "From a hillside village of painted houses to Korea's biggest fish market and two famous beaches.",
+          ko: '알록달록한 산비탈 마을부터 한국 최대 수산시장, 유명한 해수욕장 두 곳까지.',
+          ja: '色とりどりの丘の村から韓国最大の水産市場、有名なビーチ2か所まで。',
+          zh: '从山坡上的彩色村庄,到韩国最大的水产市场和两大著名海滩。'
+        },
+        time: { en: 'Full day', ko: '하루 코스', ja: '1日コース', zh: '一日游' },
+        stops: [
+          { query: 'Gamcheon Culture Village, Busan', photo: 'gamcheon', stay: 1.5, tip: {
+            en: 'Get a stamp-tour map at the information center and find the Little Prince statue. People live here — please keep quiet.',
+            ko: '안내센터에서 스탬프 투어 지도를 받고 어린왕자 동상을 찾아보세요. 주민이 사는 마을이니 조용히 둘러봐요.',
+            ja: '案内所でスタンプツアーの地図をもらい、星の王子さまの像を探してみて。住民が暮らす村なので静かに。',
+            zh: '在游客中心领取集章地图,去找小王子雕像吧。这里有居民生活,请保持安静。' } },
+          { query: 'Jagalchi Fish Market, Busan', photo: 'jagalchi', stay: 1.5, tip: {
+            en: "Korea's biggest seafood market: pick your fish on the ground floor and have it prepared at the restaurants upstairs.",
+            ko: '한국 최대 수산시장이에요. 1층에서 생선을 고르고 2층 식당에서 바로 먹을 수 있어요.',
+            ja: '韓国最大の水産市場。1階で魚を選んで、2階の食堂で調理してもらえます。',
+            zh: '韩国最大的水产市场。在一楼挑选海鲜,到二楼餐厅加工享用。' } },
+          { query: 'Haeundae Beach, Busan', photo: 'haeundae', stay: 2, tip: {
+            en: 'Walk the coastal trail to Dongbaekseom Island, or ride the Haeundae Blueline Park sky capsule nearby.',
+            ko: '동백섬 해안 산책로를 걷거나, 근처 해운대 블루라인파크 스카이캡슐을 타 보세요.',
+            ja: '冬柏島の海岸遊歩道を歩いたり、近くの海雲台ブルーラインパークのスカイカプセルに乗ってみて。',
+            zh: '可以沿海岸步道走到冬柏岛,或搭乘附近海云台蓝线公园的天空胶囊列车。' } },
+          { query: 'Gwangalli Beach, Busan', photo: 'gwangalli', stay: 1.5, tip: {
+            en: 'Come after dark to see Gwangan Bridge lit up. Drone light shows are often held on Saturday nights.',
+            ko: '해가 진 뒤에 오면 불 켜진 광안대교를 볼 수 있어요. 토요일 밤에는 드론 라이트쇼가 열리기도 해요.',
+            ja: '日が暮れてから来るとライトアップされた広安大橋が見られます。土曜の夜にはドローンショーが開かれることも。',
+            zh: '天黑后来可以看到亮灯的广安大桥。周六晚上常有无人机灯光秀。' } }
+        ]
+      },
+      {
+        region: 'gyeongju', color: '#f59e0b', cover: 'bulguksa',
+        name: { en: 'Gyeongju: The Silla Kingdom', ko: '경주, 천년 신라 여행', ja: '慶州 千年の新羅をめぐる', zh: '庆州 千年新罗之旅' },
+        desc: {
+          en: 'Explore the thousand-year capital of Silla — a "museum without walls" full of UNESCO heritage.',
+          ko: '천년 신라의 수도, 유네스코 문화유산이 가득한 "지붕 없는 박물관"을 걸어요.',
+          ja: '千年続いた新羅の都。ユネスコ世界遺産があふれる「屋根のない博物館」を歩きます。',
+          zh: '漫步千年新罗古都,这里遍布联合国教科文组织遗产,被称为"没有围墙的博物馆"。'
+        },
+        time: { en: 'Full day (ends at night)', ko: '하루 코스 (밤까지)', ja: '1日コース(夜まで)', zh: '一日游(至夜晚)' },
+        stops: [
+          { query: 'Bulguksa Temple, Gyeongju', photo: 'bulguksa', stay: 1.5, tip: {
+            en: 'A UNESCO World Heritage temple. Find the Dabotap pagoda — the same one on Korea\'s 10-won coin.',
+            ko: '유네스코 세계유산 사찰이에요. 10원짜리 동전에 있는 다보탑을 찾아보세요.',
+            ja: 'ユネスコ世界遺産のお寺。10ウォン硬貨に描かれている多宝塔を探してみて。',
+            zh: '联合国教科文组织世界遗产寺庙。找找韩国10韩元硬币上的多宝塔吧。' } },
+          { query: 'Gyeongju National Museum', photo: 'gjmuseum', stay: 1.5, tip: {
+            en: 'Free admission. See the golden Silla crowns and the giant Divine Bell of King Seongdeok.',
+            ko: '입장료가 무료예요. 신라 금관과 거대한 성덕대왕신종을 볼 수 있어요.',
+            ja: '入場無料。新羅の金冠と巨大な聖徳大王神鐘が見られます。',
+            zh: '免费参观。可以看到新罗金冠和巨大的圣德大王神钟。' } },
+          { query: 'Daereungwon Tomb Complex, Gyeongju', photo: 'daereungwon', stay: 2, tip: {
+            en: 'Step inside Cheonmachong tomb, then stroll to Cheomseongdae Observatory and the hanok cafés of Hwangnidan-gil.',
+            ko: '천마총 안을 둘러본 뒤, 첨성대와 황리단길 한옥 카페까지 걸어가 보세요.',
+            ja: '天馬塚の中を見学したら、瞻星台と皇理団通りの韓屋カフェまで歩いてみて。',
+            zh: '参观天马冢内部后,步行到瞻星台和皇理团路的韩屋咖啡馆。' } },
+          { query: 'Donggung Palace and Wolji Pond, Gyeongju', photo: 'wolji', stay: 1, tip: {
+            en: 'Best after sunset, when the lit-up pavilions are reflected in the pond.',
+            ko: '해가 진 뒤, 불 밝힌 누각이 연못에 비칠 때가 가장 아름다워요.',
+            ja: '日没後、ライトアップされた楼閣が池に映る時間がいちばん美しいです。',
+            zh: '日落后亮灯的楼阁倒映在池中,景色最美。' } }
+        ]
+      },
+      {
+        region: 'jeju', color: '#10b981', cover: 'seongsan',
+        name: { en: 'Jeju East Coast: Volcano & Emerald Beaches', ko: '제주 동쪽, 화산과 에메랄드 바다', ja: '済州 東海岸 火山とエメラルドの海', zh: '济州东海岸 火山与翡翠海滩' },
+        desc: {
+          en: "Climb a volcanic crater at sunrise and finish at Jeju's emerald beaches. Buses run less often here — check times before you go.",
+          ko: '화산 분화구에 오르고 제주의 에메랄드빛 해변에서 마무리해요. 버스 간격이 길어서 출발 전에 시간을 확인하세요.',
+          ja: '火山の火口に登り、済州のエメラルド色のビーチで締めくくり。バスの本数が少ないので出発前に時刻を確認しましょう。',
+          zh: '登上火山口,再到济州翡翠色的海滩收尾。这里公交班次较少,出发前请确认时间。'
+        },
+        time: { en: 'Full day', ko: '하루 코스', ja: '1日コース', zh: '一日游' },
+        stops: [
+          { query: 'Seongsan Ilchulbong, Jeju', photo: 'seongsan', stay: 1.5, tip: {
+            en: 'About a 20–30 minute climb to the crater rim. Nearby, you can watch the haenyeo (women divers) demonstration.',
+            ko: '분화구 정상까지 20~30분 정도 걸려요. 근처에서 해녀 물질 공연도 볼 수 있어요.',
+            ja: '火口の縁まで約20〜30分の登り。近くで海女(ヘニョ)の実演も見られます。',
+            zh: '登上火山口边缘约需20–30分钟。附近还能观看海女表演。' } },
+          { query: 'Seopjikoji, Jeju', photo: 'seopjikoji', stay: 1, tip: {
+            en: 'An easy coastal walk with views of Seongsan Ilchulbong. Yellow canola flowers bloom here in spring.',
+            ko: '성산일출봉이 보이는 편안한 해안 산책길이에요. 봄에는 노란 유채꽃이 피어요.',
+            ja: '城山日出峰を望む気軽な海岸散歩道。春には黄色い菜の花が咲きます。',
+            zh: '轻松的海岸步道,可眺望城山日出峰。春天开满黄色油菜花。' } },
+          { query: 'Woljeongri Beach, Jeju', photo: 'woljeongri', stay: 1.5, tip: {
+            en: 'Turquoise water and seaside cafés — a favorite spot to watch the afternoon light.',
+            ko: '청록빛 바다와 바닷가 카페가 있어 오후 햇살을 즐기기 좋아요.',
+            ja: 'ターコイズブルーの海と海辺のカフェ。午後の光を楽しむのにぴったり。',
+            zh: '碧蓝的海水和海边咖啡馆,是欣赏午后阳光的好去处。' } },
+          { query: 'Hamdeok Beach, Jeju', photo: 'hamdeok', stay: 1.5, tip: {
+            en: 'Shallow emerald water, great for families. Climb Seoubong hill beside the beach for a wide view.',
+            ko: '물이 얕고 에메랄드빛이라 가족 여행에 좋아요. 바로 옆 서우봉에 오르면 바다가 한눈에 보여요.',
+            ja: '遠浅でエメラルド色の海は家族連れにぴったり。隣の犀牛峰に登ると海を一望できます。',
+            zh: '海水浅、呈翡翠色,适合家庭游玩。登上旁边的犀牛峰可俯瞰大海。' } }
+        ]
+      }
+    ];
+
+    // 지역 이름과, 지역을 골랐을 때 지도 위치
+    const REGIONS = {
+      // 전체: 한반도 남쪽 전체와 제주도까지 한 화면에 보이도록 범위로 지정 (날씨는 서울 기준)
+      all: { name: { en: 'All', ko: '전체', ja: 'すべて', zh: '全部' }, center: { lat: 37.5665, lng: 126.9780 }, zoom: 7,
+        bounds: { south: 33.15, west: 126.1, north: 38.0, east: 129.6 } },
+      seoul: { name: { en: 'Seoul', ko: '서울', ja: 'ソウル', zh: '首尔' }, center: { lat: 37.5665, lng: 126.9780 }, zoom: 12,
+        intro: { en: 'The capital — royal palaces, K-culture and a city that never sleeps.', ko: '조선의 궁궐과 K-컬처, 잠들지 않는 수도.', ja: '王宮とK-カルチャー、眠らない首都。', zh: '王宫与K文化,不夜的首都。' } },
+      busan: { name: { en: 'Busan', ko: '부산', ja: '釜山', zh: '釜山' }, center: { lat: 35.13, lng: 129.07 }, zoom: 12,
+        intro: { en: "Korea's port city of beaches, seafood and hillside villages.", ko: '바다와 해산물, 산비탈 마을이 어우러진 항구 도시.', ja: 'ビーチと海鮮、丘の上の村が広がる港町。', zh: '海滩、海鲜与山坡村落交织的港口城市。' } },
+      gyeongju: { name: { en: 'Gyeongju', ko: '경주', ja: '慶州', zh: '庆州' }, center: { lat: 35.81, lng: 129.27 }, zoom: 12,
+        intro: { en: 'The 1,000-year capital of the Silla Kingdom, full of UNESCO heritage.', ko: '유네스코 유산이 가득한 천년 신라의 수도.', ja: 'ユネスコ遺産があふれる千年の新羅の都。', zh: '遍布世界遗产的千年新罗古都。' } },
+      jeju: { name: { en: 'Jeju', ko: '제주', ja: '済州', zh: '济州' }, center: { lat: 33.40, lng: 126.55 }, zoom: 10,
+        intro: { en: 'A volcanic island of craters, emerald seas and fresh ocean air.', ko: '분화구와 에메랄드빛 바다가 있는 화산섬.', ja: '火口とエメラルドの海が広がる火山島。', zh: '拥有火山口与翡翠色海洋的火山岛。' } }
+    };
+
+    // ---------- 자동 추천 일정용 명소 ----------
+    // 코스에 없는 명소 (2박 3일 일정을 채우기 위해 추가). 사진 이름 = 명소 이름표
+    const EXTRA_SPOTS = {
+      songdo: { query: 'Songdo Beach, Busan', stay: 1.5, tip: {
+        en: "Korea's first public beach. Walk the Cloud Trail skywalk over the sea or ride the Songdo Marine Cable Car.",
+        ko: '한국 최초의 해수욕장이에요. 바다 위 구름산책로를 걷거나 송도해상케이블카를 타 보세요.',
+        ja: '韓国初の海水浴場。海の上の雲の散策路を歩いたり、松島海上ケーブルカーに乗ったりしてみて。',
+        zh: '韩国第一个海水浴场。可以走海上的云端步道,或搭乘松岛海上缆车。' } },
+      yongdusan: { query: 'Yongdusan Park Busan Tower', stay: 1, tip: {
+        en: 'Ride the escalators up from Gwangbok-dong to Busan Tower for a view over the harbor.',
+        ko: '광복동에서 에스컬레이터를 타고 올라가 부산타워에서 항구를 내려다봐요.',
+        ja: '光復洞からエスカレーターで上がり、釜山タワーから港を一望。',
+        zh: '从光复洞乘自动扶梯上山,在釜山塔俯瞰港口。' } },
+      huinnyeoul: { query: 'Huinnyeoul Culture Village, Busan', stay: 1.5, tip: {
+        en: 'A cliffside village of white houses facing the sea, with lovely cafés and a coastal walking path.',
+        ko: '바다를 마주한 절벽 위 하얀 마을이에요. 예쁜 카페와 해안 산책길이 있어요.',
+        ja: '海に面した崖の上の白い村。素敵なカフェと海岸散歩道があります。',
+        zh: '面朝大海的悬崖白色村庄,有漂亮的咖啡馆和海岸步道。' } },
+      taejongdae: { query: 'Taejongdae, Busan', stay: 2, tip: {
+        en: 'Rocky cliffs and a lighthouse at the tip of Yeongdo. Take the Danubi tour train to save walking.',
+        ko: '영도 끝의 바위 절벽과 등대가 멋진 곳이에요. 다누비 열차를 타면 덜 걸어도 돼요.',
+        ja: '影島の先端にある岩の断崖と灯台。ダヌビ列車に乗れば歩く距離を減らせます。',
+        zh: '影岛尽头的岩石悬崖和灯塔。乘坐Danubi观光小火车可以少走路。' } },
+      haedong: { query: 'Haedong Yonggungsa Temple, Busan', stay: 1.5, tip: {
+        en: 'A rare Buddhist temple built right on the seaside rocks. Go early to beat the crowds.',
+        ko: '바닷가 바위 위에 세워진 보기 드문 절이에요. 사람이 적은 아침에 가 보세요.',
+        ja: '海辺の岩の上に建つ珍しいお寺。混雑を避けるなら朝早めに。',
+        zh: '建在海边岩石上的罕见寺庙。早点去可以避开人潮。' } },
+      cheomseongdae: { query: 'Cheomseongdae Observatory, Gyeongju', stay: 0.5, tip: {
+        en: 'The oldest surviving astronomical observatory in East Asia, beautifully lit up at night.',
+        ko: '동아시아에서 가장 오래된 천문대예요. 밤에는 조명이 아름다워요.',
+        ja: '東アジアに現存する最古の天文台。夜のライトアップも美しいです。',
+        zh: '东亚现存最古老的天文台,夜晚灯光很美。' } },
+      seokguram: { query: 'Seokguram Grotto, Gyeongju', stay: 1, tip: {
+        en: 'A UNESCO-listed stone Buddha in a mountain grotto above Bulguksa. Bus 12 runs between the two.',
+        ko: '불국사 위 산속 석굴에 모셔진 유네스코 세계유산 불상이에요. 불국사와는 12번 버스로 오가요.',
+        ja: '仏国寺の上の山中の石窟にある世界遺産の石仏。仏国寺とは12番バスで行き来できます。',
+        zh: '位于佛国寺上方山中石窟里的世界遗产石佛。与佛国寺之间可乘12路公交往返。' } },
+      hwangnidan: { query: 'Hwangnidan-gil, Gyeongju', stay: 1.5, tip: {
+        en: "A street of hanok cafés, bakeries and small shops — Gyeongju's trendiest walk.",
+        ko: '한옥 카페와 빵집, 작은 가게가 모인 경주에서 가장 핫한 거리예요.',
+        ja: '韓屋カフェやベーカリー、小さなお店が並ぶ、慶州でいちばん人気の通り。',
+        zh: '汇集韩屋咖啡馆、面包店和小店的街道,是庆州最热门的散步路线。' } },
+      gyochon: { query: 'Gyochon Traditional Village, Gyeongju', stay: 1, tip: {
+        en: 'A hanok village with the old house of the wealthy Choi family. Try the famous Gyori gimbap nearby.',
+        ko: '경주 최부잣집이 있는 한옥마을이에요. 근처의 유명한 교리김밥도 맛보세요.',
+        ja: '慶州崔氏の旧家がある韓屋村。近くの名物キョリキンパもぜひ。',
+        zh: '庆州崔富家所在的韩屋村,别忘了尝尝附近有名的校里紫菜包饭。' } },
+      woljeonggyo: { query: 'Woljeonggyo Bridge, Gyeongju', stay: 0.5, tip: {
+        en: 'A restored Silla-era covered bridge — stunning when lit up at night.',
+        ko: '신라 시대 다리를 복원한 누각 다리예요. 밤 조명이 정말 멋져요.',
+        ja: '新羅時代の橋を復元した屋根付きの橋。夜のライトアップが見事です。',
+        zh: '复原的新罗时代廊桥,夜晚灯光非常壮观。' } },
+      osulloc: { query: 'Osulloc Tea Museum, Jeju', stay: 1, tip: {
+        en: 'Green tea fields and a free tea museum. Try the green tea ice cream.',
+        ko: '푸른 녹차밭과 무료 차 박물관이 있어요. 녹차 아이스크림을 꼭 드셔 보세요.',
+        ja: '緑茶畑と無料のお茶博物館。抹茶アイスをぜひ。',
+        zh: '有绿茶田和免费的茶博物馆,一定要尝尝绿茶冰淇淋。' } },
+      jusangjeolli: { query: 'Daepo Jusangjeolli Cliff, Jeju', stay: 1, tip: {
+        en: 'Hexagonal lava columns where waves crash dramatically against the cliff.',
+        ko: '육각형 용암 기둥 절벽에 파도가 부서지는 멋진 풍경이에요.',
+        ja: '六角形の溶岩柱の崖に波が打ち寄せる迫力ある景色。',
+        zh: '六角形熔岩石柱悬崖,海浪拍岸,景色壮观。' } },
+      cheonjiyeon: { query: 'Cheonjiyeon Waterfall, Seogwipo', stay: 1, tip: {
+        en: 'An easy walk through a lush valley to a 22 m waterfall. It stays open in the evening, too.',
+        ko: '울창한 계곡 길을 따라 22m 폭포까지 쉽게 걸어가요. 저녁에도 열어요.',
+        ja: '緑豊かな渓谷を歩いて高さ22mの滝へ。夜も開いています。',
+        zh: '沿着茂密的溪谷轻松步行到22米高的瀑布,晚上也开放。' } },
+      hyeopjae: { query: 'Hyeopjae Beach, Jeju', stay: 1.5, tip: {
+        en: 'Emerald water with Biyangdo Island floating offshore — perfect at sunset.',
+        ko: '에메랄드빛 바다 너머로 비양도가 보여요. 해 질 무렵이 특히 예뻐요.',
+        ja: 'エメラルドの海の向こうに飛揚島が浮かびます。夕暮れ時が特にきれい。',
+        zh: '翡翠色的海面上可以看到飞扬岛,日落时分格外美丽。' } },
+      dongmun: { query: 'Dongmun Market, Jeju', stay: 1, tip: {
+        en: "Jeju's oldest market. Don't miss the night market with tangerine treats and black-pork skewers.",
+        ko: '제주에서 가장 오래된 시장이에요. 귤 간식과 흑돼지 꼬치가 있는 야시장도 들러 보세요.',
+        ja: '済州で最も古い市場。みかんスイーツや黒豚串の夜市もおすすめ。',
+        zh: '济州最古老的市场。别错过有橘子小吃和黑猪肉串的夜市。' } }
+    };
+
+    // 지역별 날짜 나누기 (가까운 곳끼리 하루에): 하루에 명소 3곳
+    const PLAN_DAYS = {
+      seoul: [['gyeongbokgung', 'bukchon', 'insadong'], ['myeongdong', 'nseoultower', 'ddp'], ['seoulforest', 'lotteworldtower', 'banpo']],
+      busan: [['songdo', 'gamcheon', 'jagalchi'], ['yongdusan', 'huinnyeoul', 'taejongdae'], ['haedong', 'haeundae', 'gwangalli']],
+      gyeongju: [['daereungwon', 'cheomseongdae', 'wolji'], ['seokguram', 'bulguksa', 'gjmuseum'], ['hwangnidan', 'gyochon', 'woljeonggyo']],
+      jeju: [['seongsan', 'seopjikoji', 'woljeongri'], ['osulloc', 'jusangjeolli', 'cheonjiyeon'], ['hyeopjae', 'dongmun', 'hamdeok']]
+    };
+
+    // 명소 이름표(사진 이름)로 명소 정보 찾기
+    function spotInfo(key) {
+      for (const c of COURSES) {
+        const s = c.stops.find(st => st.photo === key);
+        if (s) return s;
+      }
+      return { ...EXTRA_SPOTS[key], photo: key };
+    }
+
+    // 카테고리 아이콘 (type: Google 장소 종류)
+    const ICON = {
+      courses: '<path d="M6 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M9 16h6a3 3 0 0 0 0-6h-1"/>',
+      planner: '<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="m9 15 2 2 4-4"/>',
+      attraction: '<path d="M2 9c3 0 5-2 10-5 5 3 7 5 10 5"/><path d="M5 9v11M19 9v11M3 20h18"/><path d="M9 20v-6h6v6"/>',
+      restaurant: '<path d="M7 2v8a2 2 0 0 0 2 2v10M11 2v8a2 2 0 0 1-2 2M9 2v6"/><path d="M17 22V2c-2 1-3 4-3 7s1 4 3 4"/>',
+      cafe: '<path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17M7 2v3M11 2v3M3 21h16"/>',
+      lodging: '<path d="M3 20V8M21 20v-6a3 3 0 0 0-3-3h-8v6M3 17h18"/><circle cx="7" cy="12" r="2"/>',
+      parking: '<circle cx="12" cy="12" r="10"/><path d="M10 17V7h3a3 3 0 0 1 0 6h-3"/>',
+      ev: '<path d="M5 22V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v17M3 22h14M15 10h2a2 2 0 0 1 2 2v4a1.5 1.5 0 0 0 3 0V8l-3-3"/><path d="m10 7-2 4h3l-2 4"/>',
+      mine: '<path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/>'
+    };
+    const CATS = [
+      { key: 'courses', color: '#3d6af2' },
+      { key: 'planner', color: '#12b5a0' },
+      { key: 'attraction', type: 'tourist_attraction', color: '#7a5af8' },
+      { key: 'restaurant', type: 'restaurant', color: '#f0544f' },
+      { key: 'cafe', type: 'cafe', color: '#b7791f' },
+      { key: 'lodging', type: 'lodging', color: '#0ea5e9' },
+      { key: 'parking', type: 'parking', color: '#475569' },
+      { key: 'ev', type: 'electric_vehicle_charging_station', color: '#10b981' },
+      { key: 'mine', color: '#ff6b6b' }
+    ];
+    const svg = (paths, size = 24) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+
+    // ---------- 화면 글자 채우기 ----------
+    document.documentElement.lang = LANG_CODE;
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = T[el.dataset.i18n]; });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = T[el.dataset.i18nPlaceholder]; });
+    document.querySelectorAll('[data-i18n-label]').forEach(el => { el.setAttribute('aria-label', T[el.dataset.i18nLabel]); el.title = T[el.dataset.i18nLabel]; });
+
+    const langSelect = document.getElementById('langSelect');
+    langSelect.value = LANG;
+    langSelect.addEventListener('change', () => {
+      try { localStorage.setItem('genieLang', langSelect.value); } catch (e) {}
+      // 지도 글자 언어는 처음 불러올 때 정해지므로 페이지를 새로 불러와요
+      const url = new URL(location.href);
+      url.searchParams.set('lang', langSelect.value);
+      location.href = url.toString();
+    });
+
+    // ---------- 작은 도우미 ----------
+    const $ = id => document.getElementById(id);
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmtDur = sec => { const m = Math.max(1, Math.round(sec / 60)); return T.dur(Math.floor(m / 60), m % 60); };
+    const fmtKm = m => (m / 1000).toFixed(1) + ' km';
+    const isNarrow = () => window.innerWidth <= 900;
+    const side = $('side');
+
+    function showMapMsg(title, text) {
+      $('mapMsgTitle').textContent = title;
+      $('mapMsgText').textContent = text;
+      $('mapMsg').hidden = false;
+    }
+
+    let toastTimer = null;
+    function toast(text) {
+      const el = $('toast');
+      el.textContent = text;
+      el.hidden = false;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { el.hidden = true; }, 2600);
+    }
+
+    // 두 지점 사이 거리(km)
+    function kmBetween(a, b) {
+      const R = 6371, rad = x => x * Math.PI / 180;
+      const dLat = rad(b.lat - a.lat), dLng = rad(b.lng - a.lng);
+      const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLng / 2) ** 2;
+      return 2 * R * Math.asin(Math.sqrt(h));
+    }
+
+    // ---------- 상태 ----------
+    let map = null, infoWindow = null, Place = null, AdvancedMarkerElement = null;
+    let mapsReady = false;
+    let waitIdle = null;
+    let courseToken = 0, listToken = 0;
+    let mode = 'courses';
+    let courseLayer = { markers: [], lines: [] };
+    let listLayer = { markers: [] };
+    let myPos = null, myMarker = null;
+    const placeCache = new Map();
+    const placeIndex = new Map(); // 화면에 나온 장소 기억 (찜하기용)
+
+    // ---------- 사진 ----------
+    const photoUrl = key => PHOTOS[key] ? PHOTOS[key].src : '';
+    function creditHtml(key, cls = 'credit') {
+      const p = PHOTOS[key];
+      return p ? `<a class="${cls}" href="${esc(p.page)}" target="_blank" rel="noopener" title="${esc(p.by)} · ${esc(p.lic)}">📷 ${esc(p.by)}</a>` : '';
+    }
+    function renderCredits() {
+      const used = [...Object.values(PHOTOS), ...Object.entries(CAT_PHOTOS).filter(([k]) => k !== 'attraction').map(([, p]) => p)];
+      $('credits').innerHTML = `
+        <summary>📷 ${T.photoCredits}</summary>
+        <ul>${used.map(p => `<li><a href="${esc(p.page)}" target="_blank" rel="noopener">${esc(p.by)}</a> · ${esc(p.lic)}</li>`).join('')}</ul>
+        <p>${T.footer}</p>`;
+    }
+    renderCredits();
+
+    // ---------- 찜하기 (내 여행) ----------
+    function loadSaved() {
+      try { return JSON.parse(localStorage.getItem('genieSaved') || '[]'); } catch (e) { return []; }
+    }
+    let saved = loadSaved();
+    function persistSaved() {
+      try { localStorage.setItem('genieSaved', JSON.stringify(saved)); } catch (e) {}
+    }
+    const isSaved = id => saved.some(s => s.id === id);
+
+    // 장소 사진 고르기:
+    //  1) 지니맵 명소 사진(Wikimedia)  2) Google이 준 실제 장소 사진  3) 없으면 카테고리 그림
+    //  ※ Demo Key는 Google 사진을 주지 않아요. 결제 계정이 있는 일반 키로 바꾸면 2)가 자동으로 나와요.
+    const spotPhotoById = new Map(); // Google 장소 ID → 지니맵 명소 사진
+    function googlePhoto(place) {
+      const p = place.photos?.[0];
+      if (!p) return null;
+      try {
+        const a = p.authorAttributions?.[0];
+        return { src: p.getURI({ maxWidth: 480 }), by: a?.displayName || 'Google', page: a?.uri || place.googleMapsURI || '' };
+      } catch (e) { return null; }
+    }
+
+    // 지니맵 명소의 대략적인 위치 — 화면에 보여 주는 정보가 아니라,
+    // '관광명소' 검색 결과가 어느 명소인지 알아보고 그 명소 사진을 붙이는 데만 써요.
+    const SPOT_AT = {
+      gyeongbokgung: [37.5796, 126.9770], bukchon: [37.5826, 126.9830], changdeokgung: [37.5794, 126.9910], insadong: [37.5740, 126.9850],
+      myeongdong: [37.5636, 126.9850], nseoultower: [37.5512, 126.9882], ddp: [37.5665, 127.0092], seoulforest: [37.5444, 127.0374],
+      gwangjang: [37.5700, 126.9996], cheonggyecheon: [37.5690, 126.9780], banpo: [37.5100, 126.9960], lotteworldtower: [37.5126, 127.1025],
+      gamcheon: [35.0975, 129.0106], jagalchi: [35.0966, 129.0306], haeundae: [35.1587, 129.1604], gwangalli: [35.1532, 129.1187],
+      songdo: [35.0760, 129.0170], huinnyeoul: [35.0780, 129.0440], taejongdae: [35.0530, 129.0870], yongdusan: [35.1007, 129.0324], haedong: [35.1884, 129.2233],
+      bulguksa: [35.7900, 129.3320], gjmuseum: [35.8290, 129.2280], daereungwon: [35.8380, 129.2120], wolji: [35.8347, 129.2266],
+      cheomseongdae: [35.8347, 129.2190], seokguram: [35.7950, 129.3490], hwangnidan: [35.8380, 129.2090], gyochon: [35.8290, 129.2150], woljeonggyo: [35.8290, 129.2180],
+      seongsan: [33.4580, 126.9420], seopjikoji: [33.4240, 126.9300], woljeongri: [33.5560, 126.7960], hamdeok: [33.5430, 126.6690],
+      osulloc: [33.3060, 126.2890], jusangjeolli: [33.2380, 126.4250], cheonjiyeon: [33.2470, 126.5540], hyeopjae: [33.3940, 126.2390], dongmun: [33.5120, 126.5280]
+    };
+    // 이름에 이 낱말이 들어가야 같은 명소로 봐요 (근처의 다른 장소에 엉뚱한 사진이 붙지 않게)
+    const SPOT_WORDS = {
+      gyeongbokgung: ['경복궁', 'Gyeongbok'], bukchon: ['북촌', 'Bukchon'], changdeokgung: ['창덕궁', 'Changdeok'],
+      insadong: ['인사동', 'Insadong', 'Insa-dong'], myeongdong: ['명동거리', '명동쇼핑', 'Myeongdong Street', 'Myeongdong Shopping', 'Myeong-dong Street'],
+      nseoultower: ['서울타워', '남산타워', 'Seoul Tower', 'Namsan Tower'], ddp: ['동대문디자인플라자', 'DDP', 'Dongdaemun Design'],
+      seoulforest: ['서울숲', 'Seoul Forest'], gwangjang: ['광장시장', 'Gwangjang'], cheonggyecheon: ['청계천', 'Cheonggye'],
+      banpo: ['반포한강', '달빛무지개', 'Banpo Hangang', 'Rainbow Fountain'], lotteworldtower: ['롯데월드타워', '서울스카이', 'Lotte World Tower', 'Seoul Sky'],
+      gamcheon: ['감천문화마을', 'Gamcheon'], jagalchi: ['자갈치', 'Jagalchi'], haeundae: ['해운대해수욕장', 'Haeundae Beach'],
+      gwangalli: ['광안리해수욕장', 'Gwangalli Beach'], songdo: ['송도해수욕장', '송도해변', 'Songdo Beach'], huinnyeoul: ['흰여울', 'Huinnyeoul'],
+      taejongdae: ['태종대', 'Taejongdae'], yongdusan: ['용두산', '부산타워', 'Yongdusan', 'Busan Tower'], haedong: ['해동용궁사', 'Yonggungsa'],
+      bulguksa: ['불국사', 'Bulguksa'], gjmuseum: ['국립경주박물관', 'Gyeongju National Museum'], daereungwon: ['대릉원', '천마총', 'Daereungwon', 'Cheonmachong'],
+      wolji: ['동궁과월지', '안압지', 'Wolji', 'Anapji'], cheomseongdae: ['첨성대', 'Cheomseongdae'], seokguram: ['석굴암', 'Seokguram'],
+      hwangnidan: ['황리단길', 'Hwangnidan'], gyochon: ['교촌', 'Gyochon'], woljeonggyo: ['월정교', 'Woljeonggyo'],
+      seongsan: ['성산일출봉', 'Ilchulbong'], seopjikoji: ['섭지코지', 'Seopjikoji'], woljeongri: ['월정리해수욕장', '월정리해변', 'Woljeongri Beach'],
+      hamdeok: ['함덕해수욕장', '함덕서우봉', 'Hamdeok Beach'], osulloc: ['오설록', 'Osulloc', "O'sulloc"], jusangjeolli: ['주상절리', 'Jusangjeolli'],
+      cheonjiyeon: ['천지연', 'Cheonjiyeon'], hyeopjae: ['협재해수욕장', 'Hyeopjae Beach'], dongmun: ['동문시장', 'Dongmun']
+    };
+    const norm = s => String(s || '').toLowerCase().replace(/[\s_\-·.,'’()]/g, '');
+    const spotLocs = Object.entries(SPOT_AT).map(([photo, [lat, lng]]) => ({ photo, lat, lng }));
+    function nearSpotPhoto(place) {
+      // 이름이 맞고, 2km 안에 있는 지니맵 명소의 사진
+      const here = { lat: place.location.lat(), lng: place.location.lng() };
+      const name = norm(place.displayName);
+      const hit = spotLocs.find(s => kmBetween(s, here) < 2 && (SPOT_WORDS[s.photo] || []).some(w => name.includes(norm(w))));
+      return hit ? hit.photo : '';
+    }
+
+    // 관광명소인데 지니맵 사진이 없으면: Wikimedia Commons에서 그 장소 이름으로 자유 이용 사진 찾기
+    //  (사진 파일 이름에 장소 이름이 그대로 들어 있을 때만 써요 → 다른 곳 사진이 붙지 않게)
+    const commonsCache = new Map();
+    let commonsChain = Promise.resolve(); // 한 번에 하나씩 차례로 (Wikimedia 서버 배려)
+    function commonsPhoto(name, lat, lng) {
+      const key = norm(name);
+      if (key.length < 3) return Promise.resolve(null);
+      if (commonsCache.has(key)) return commonsCache.get(key);
+      // 사진에 찍힌 위치(GPS)가 있으면 실제 장소에서 가까운지 확인
+      const gpsKm = md => {
+        const la = parseFloat(md.GPSLatitude?.value), lo = parseFloat(md.GPSLongitude?.value);
+        return isNaN(la) || isNaN(lo) ? null : kmBetween({ lat, lng }, { lat: la, lng: lo });
+      };
+      const api = (host, params) => fetch(`https://${host}/w/api.php?` + new URLSearchParams({ ...params, format: 'json', origin: '*' }))
+        .then(r => r.ok ? r.json() : null);
+      const toPhoto = ii => {
+        const md = ii.extmetadata || {};
+        const artistDoc = new DOMParser().parseFromString(md.Artist?.value || '', 'text/html'); // 글자만 꺼내기
+        const by = artistDoc.body.textContent.replace(/\s+/g, ' ').trim().slice(0, 40) || 'Wikimedia Commons';
+        return { src: ii.thumburl, page: ii.descriptionurl, by, lic: md.LicenseShortName?.value || '' };
+      };
+      const job = commonsChain.then(async () => {
+        try {
+          // 1) Commons에서 파일 이름에 장소 이름이 들어간 사진
+          const data = await api('commons.wikimedia.org', {
+            action: 'query', generator: 'search', gsrsearch: name + ' filetype:bitmap', gsrnamespace: '6', gsrlimit: '5',
+            prop: 'imageinfo', iiprop: 'url|extmetadata', iiurlwidth: '480'
+          });
+          const pages = Object.values(data?.query?.pages || {}).sort((a, b) => a.index - b.index);
+          for (const pg of pages) {
+            const ii = pg.imageinfo?.[0];
+            const km = ii ? gpsKm(ii.extmetadata || {}) : null;
+            // 파일 이름에 장소 이름이 있고, 3km 안에서 찍힌 사진만
+            if (ii?.thumburl && norm(pg.title).includes(key) && km !== null && km < 3) return toPhoto(ii);
+          }
+
+          // 2) 위키백과에서 이름이 같은 문서의 대표 사진 (Commons에 있는 자유 이용 사진만)
+          const wiki = /[가-힣]/.test(name) ? 'ko' : LANG === 'ja' || LANG === 'zh' ? LANG : 'en';
+          const w = await api(`${wiki}.wikipedia.org`, { action: 'query', generator: 'search', gsrsearch: name, gsrlimit: '1', prop: 'pageimages', piprop: 'name' });
+          const art = Object.values(w?.query?.pages || {})[0];
+          const t = norm(art?.title);
+          const same = t === key || (key.length >= 4 && (t.includes(key) || key.includes(t)) && Math.abs(t.length - key.length) <= 3);
+          if (!art?.pageimage || !same) return null;
+          const c = await api('commons.wikimedia.org', { action: 'query', titles: 'File:' + art.pageimage, prop: 'imageinfo', iiprop: 'url|extmetadata', iiurlwidth: '480' });
+          const ii = Object.values(c?.query?.pages || {})[0]?.imageinfo?.[0];
+          if (!ii?.thumburl) return null;
+          // 위치 정보가 있으면 5km 안이어야 하고, 없으면 한국어 위키백과 문서일 때만 믿어요
+          const km = gpsKm(ii.extmetadata || {});
+          return (km !== null ? km < 5 : wiki === 'ko') ? toPhoto(ii) : null;
+        } catch (e) {
+          return null;
+        } finally {
+          await new Promise(r => setTimeout(r, 120));
+        }
+      });
+      commonsChain = job;
+      commonsCache.set(key, job);
+      return job;
+    }
+
+    // Google 장소를 간단한 기록으로 바꿔 기억해 두기
+    function remember(place, photo, isSight = false) {
+      if (photo && !spotPhotoById.has(place.id)) {
+        spotPhotoById.set(place.id, photo);
+        spotLocs.push({ photo, lat: place.location.lat(), lng: place.location.lng() });
+      }
+      const own = photo || spotPhotoById.get(place.id) || (isSight ? nearSpotPhoto(place) : '');
+      const g = own ? null : googlePhoto(place);
+      const rec = {
+        id: place.id,
+        name: place.displayName,
+        address: place.formattedAddress || '',
+        lat: place.location.lat(),
+        lng: place.location.lng(),
+        url: place.googleMapsURI || '',
+        photo: own,
+        gphoto: g
+      };
+      placeIndex.set(rec.id, rec);
+      return rec;
+    }
+
+    // 목록 왼쪽 사진 칸
+    function thumbHtml(rec, label, color, iconKey) {
+      if (rec.photo) {
+        return `<div class="thumb" style="background-image:url('${esc(photoUrl(rec.photo))}')"><span class="num">${label}</span></div>${creditHtml(rec.photo, 'thumb-credit')}`;
+      }
+      if (rec.gphoto) {
+        return `<div class="thumb" style="background-image:url('${esc(rec.gphoto.src)}')"><span class="num">${label}</span></div>
+          <a class="thumb-credit" href="${esc(rec.gphoto.page)}" target="_blank" rel="noopener" title="${esc(T.googlePhoto)}">📷 ${esc(rec.gphoto.by)}</a>`;
+      }
+      if (rec.wphoto) {
+        return `<div class="thumb" style="background-image:url('${esc(rec.wphoto.src)}')"><span class="num">${label}</span></div>
+          <a class="thumb-credit" href="${esc(rec.wphoto.page)}" target="_blank" rel="noopener" title="${esc(rec.wphoto.by)} · ${esc(rec.wphoto.lic)}">📷 ${esc(rec.wphoto.by)}</a>`;
+      }
+      return `<div class="thumb cat-thumb" style="--c:${color}">${svg(ICON[iconKey], 34)}<span class="num">${label}</span></div>`;
+    }
+    const recPhotoSrc = rec => rec.photo ? photoUrl(rec.photo) : rec.gphoto ? rec.gphoto.src : rec.wphoto ? rec.wphoto.src : '';
+
+    function saveBtnHtml(rec) {
+      const on = isSaved(rec.id);
+      return `<span class="save-btn${on ? ' on' : ''}" role="button" tabindex="0" data-id="${esc(rec.id)}" title="${esc(on ? T.unsave : T.save)}" aria-pressed="${on}">${on ? '♥' : '♡'}</span>`;
+    }
+
+    function toggleSave(id) {
+      if (isSaved(id)) {
+        saved = saved.filter(s => s.id !== id);
+        toast(T.removedToast);
+      } else {
+        const rec = placeIndex.get(id);
+        if (!rec) return;
+        saved.push({ ...rec, gphoto: null }); // Google 사진 주소는 시간이 지나면 바뀌어서 저장하지 않음
+        toast(T.savedToast);
+      }
+      persistSaved();
+      const on = isSaved(id);
+      document.querySelectorAll(`.save-btn[data-id="${CSS.escape(id)}"]`).forEach(b => {
+        b.classList.toggle('on', on);
+        b.textContent = on ? '♥' : '♡';
+        b.title = on ? T.unsave : T.save;
+        b.setAttribute('aria-pressed', on);
+      });
+      if (mode === 'mine') showMine();
+    }
+
+    // ---------- 내 위치에서 거리 ----------
+    function distHtml(rec) {
+      return `<div class="dist" data-lat="${rec.lat}" data-lng="${rec.lng}">${myPos ? esc(T.fromMe(kmBetween(myPos, rec).toFixed(1) + ' km')) : ''}</div>`;
+    }
+    function updateDistances() {
+      if (!myPos) return;
+      document.querySelectorAll('.dist').forEach(el => {
+        const d = kmBetween(myPos, { lat: +el.dataset.lat, lng: +el.dataset.lng });
+        el.textContent = T.fromMe(d.toFixed(1) + ' km');
+      });
+    }
+
+    // ---------- 네이버 지도·티맵 앱으로 길찾기 ----------
+    // API 키 없이, 각 앱이 정한 링크 주소(URL Scheme)로 휴대폰 앱을 열어요.
+    const SITE_URL = 'https://jiniya1227.github.io/genie-map/'; // 네이버가 요구하는 'appname'(웹은 내 사이트 주소)
+    const isMobile = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isIOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const tmapStore = () => isIOS() ? 'https://apps.apple.com/kr/app/id431589174'
+      : 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku';
+
+    function appLinks(rec) {
+      const lat = rec.lat.toFixed(6), lng = rec.lng.toFixed(6);
+      const name = encodeURIComponent(rec.name);
+      return {
+        // 네이버 지도: 대중교통 길찾기 (출발지를 비우면 내 현재 위치에서 출발)
+        naverApp: `nmap://route/public?dlat=${lat}&dlng=${lng}&dname=${name}&appname=${encodeURIComponent(SITE_URL)}`,
+        naverWeb: `https://map.naver.com/p/search/${name}`,
+        // 티맵: 자동차 길안내 (X = 경도, Y = 위도)
+        tmapApp: `tmap://route?rGoName=${name}&rGoX=${lng}&rGoY=${lat}`
+      };
+    }
+
+    function appButtonsHtml(rec) {
+      const l = appLinks(rec);
+      return `
+        <div class="app-btns">
+          <a class="app-btn naver" href="${esc(isMobile() ? l.naverApp : l.naverWeb)}" data-app-url="${esc(l.naverApp)}" target="_blank" rel="noopener"
+             title="${esc(T.naverTitle)}" data-app="naver" data-web="${esc(l.naverWeb)}"><i>N</i>${T.naver}</a>
+          <a class="app-btn tmap" href="${esc(l.tmapApp)}" title="${esc(T.tmapTitle)}" data-app="tmap"><i>T</i>${T.tmap}</a>
+        </div>`;
+    }
+
+    // 카드 안의 작은 버튼·링크를 누르면 카드 자체는 눌리지 않게 먼저 처리
+    document.addEventListener('click', e => {
+      const save = e.target.closest('.save-btn');
+      if (save) { e.preventDefault(); e.stopPropagation(); toggleSave(save.dataset.id); return; }
+
+      const link = e.target.closest('.credit, .thumb-credit, .gmap-link');
+      if (link) { e.preventDefault(); e.stopPropagation(); window.open(link.href, '_blank', 'noopener'); return; }
+
+      const btn = e.target.closest('.app-btn');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const isNaver = btn.dataset.app === 'naver';
+      if (!isMobile()) {
+        // 컴퓨터: 네이버는 웹 지도를 새 창으로, 티맵은 휴대폰에서 쓰라고 안내
+        if (isNaver) window.open(btn.dataset.web, '_blank', 'noopener');
+        else toast(T.tmapPhone);
+        return;
+      }
+      // 휴대폰: 앱을 열고, 앱이 없으면 네이버는 웹 지도 · 티맵은 앱 설치 화면으로
+      const fallback = isNaver ? btn.dataset.web : tmapStore();
+      const started = Date.now();
+      location.href = isNaver ? btn.dataset.appUrl : btn.getAttribute('href');
+      setTimeout(() => {
+        // 앱이 열리면 이 페이지가 뒤로 가려져요. 그대로 보이면 앱이 없는 것
+        if (!document.hidden && Date.now() - started < 3000) location.href = fallback;
+      }, 1500);
+    }, true);
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList?.contains('save-btn')) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSave(e.target.dataset.id);
+      }
+    }, true);
+
+    // ---------- 날씨 카드 (Google Weather API) ----------
+    let weatherRegion = null;
+    const weatherCache = new Map();
+    function setWeatherRegion(key) {
+      if (key === weatherRegion) return;
+      weatherRegion = key;
+      $('wcTitle').textContent = key === 'all' ? T.allKorea : `${REGIONS[key].name[LANG]}${LANG !== 'en' ? ' · ' + REGIONS[key].name.en : ''}`;
+      loadWeather(key);
+    }
+    async function loadWeather(key) {
+      const box = $('wcWeather');
+      if (GOOGLE_MAPS_API_KEY.includes('YOUR_')) { box.innerHTML = ''; return; }
+      const r = REGIONS[key];
+      const placeName = key === 'all' ? REGIONS.seoul.name[LANG] : r.name[LANG];
+      try {
+        if (!weatherCache.has(key)) {
+          weatherCache.set(key, fetch('https://weather.googleapis.com/v1/currentConditions:lookup?' + new URLSearchParams({
+            key: GOOGLE_MAPS_API_KEY,
+            'location.latitude': r.center.lat,
+            'location.longitude': r.center.lng,
+            languageCode: LANG_CODE
+          })).then(res => res.ok ? res.json() : null));
+        }
+        const w = await weatherCache.get(key);
+        if (key !== weatherRegion) return;
+        if (!w || w.temperature?.degrees == null) { box.innerHTML = ''; return; }
+        const hi = w.currentConditionsHistory?.maxTemperature?.degrees;
+        const lo = w.currentConditionsHistory?.minTemperature?.degrees;
+        const icon = w.weatherCondition?.iconBaseUri ? `<img src="${esc(w.weatherCondition.iconBaseUri)}.svg" alt="">` : '';
+        box.innerHTML = `
+          <div class="wc-now">${esc(T.weatherAt(placeName))}</div>
+          <div class="wc-now">${icon}<span class="wc-temp">${Math.round(w.temperature.degrees)}°</span></div>
+          <div class="wc-desc">${esc(w.weatherCondition?.description?.text || '')}</div>
+          ${hi != null && lo != null ? `<div class="wc-desc">${esc(T.hiLo(Math.round(hi), Math.round(lo)))}</div>` : ''}`;
+      } catch (e) { box.innerHTML = ''; }
+    }
+    setWeatherRegion('all');
+
+    // ---------- 카테고리 아이콘 ----------
+    $('cats').innerHTML = CATS.map(c => `
+      <button type="button" class="cat" data-cat="${c.key}" aria-pressed="${c.key === 'courses'}" style="--ico:${c.color}">
+        <span class="cat-ico">${svg(ICON[c.key])}</span>${esc(T.cats[c.key])}
+      </button>`).join('');
+    $('cats').addEventListener('click', e => {
+      const b = e.target.closest('.cat');
+      if (!b) return;
+      const key = b.dataset.cat;
+      if (key === 'courses') setMode('courses');
+      else if (key === 'planner') showPlanner();
+      else if (key === 'mine') showMine();
+      else runNearby(key);
+    });
+
+    // 왼쪽 패널 화면 바꾸기
+    function setMode(next) {
+      mode = next;
+      const cat = next === 'search' ? null : next;
+      document.querySelectorAll('.cat').forEach(b => b.setAttribute('aria-pressed', b.dataset.cat === cat));
+      const courses = next === 'courses';
+      const planner = next === 'planner';
+      $('coursesView').hidden = !courses;
+      $('planView').hidden = !planner;
+      $('listView').hidden = courses || planner;
+      $('researchBtn').hidden = true;
+      $('planLegend').hidden = !(planner && plan);
+      if (!mapsReady) return;
+      infoWindow.close();
+      courseLayer.markers.forEach(m => { if (m) m.map = courses ? map : null; });
+      courseLayer.lines.forEach(l => l.setMap(courses ? map : null));
+      showPlanLayer(planner);
+      if (!courses) clearListLayer();
+      if (courses) {
+        clearListLayer();
+        if ($('courseDetail').hidden) { sizeListSpace(); viewing = null; trackScroll(); }
+      }
+      if (planner && plan) selectDay(planDay, false);
+    }
+
+    // ---------- Google 장소 정보 ----------
+    async function findPlace(query) {
+      const key = query + '|' + LANG;
+      if (!placeCache.has(key)) {
+        placeCache.set(key, Place.searchByText({
+          textQuery: query,
+          fields: PLACE_FIELDS,
+          language: LANG_CODE,
+          region: 'kr',
+          maxResultCount: 1
+        }).then(({ places }) => places[0] || null));
+      }
+      return placeCache.get(key);
+    }
+
+    // 지금 영업 중인지: Google이 준 영업시간(periods)과 현지 시간으로 계산
+    function openState(place) {
+      const periods = place.regularOpeningHours?.periods;
+      if (!periods?.length || place.utcOffsetMinutes == null) return null;
+      if (place.businessStatus && place.businessStatus !== 'OPERATIONAL') return false;
+      const WEEK = 7 * 1440;
+      const local = new Date(Date.now() + place.utcOffsetMinutes * 60000);
+      const now = local.getUTCDay() * 1440 + local.getUTCHours() * 60 + local.getUTCMinutes();
+      return periods.some(p => {
+        if (!p.close) return true; // 24시간 영업
+        const open = p.open.day * 1440 + p.open.hour * 60 + p.open.minute;
+        let close = p.close.day * 1440 + p.close.hour * 60 + p.close.minute;
+        if (close <= open) close += WEEK;
+        return (now >= open && now < close) || (now + WEEK >= open && now + WEEK < close);
+      });
+    }
+
+    // 장소 이름 아래에 들어갈 주소·영업·평점 HTML
+    function placeMetaHtml(place, open) {
+      const day = (new Date().getDay() + 6) % 7; // Google은 월요일부터 시작
+      const today = place.regularOpeningHours?.weekdayDescriptions?.[day];
+      const badge = open === true ? `<span class="badge open">${T.openNow}</span>`
+        : open === false ? `<span class="badge closed">${T.closedNow}</span>` : '';
+      const rating = place.rating ? `<span>★ ${place.rating.toFixed(1)} ${place.userRatingCount ? T.reviews(place.userRatingCount) : ''}</span>` : '';
+      return `
+        <div class="addr">${esc(place.formattedAddress)}</div>
+        ${(badge || today || rating) ? `<div class="meta">${badge}${today ? `<span>${esc(today)}</span>` : ''}${rating}</div>` : ''}`;
+    }
+
+    // 정보 창 열기
+    function openInfo(marker, rec, metaHtml, extraHtml = '') {
+      const title = document.createElement('div');
+      title.className = 'iw-title';
+      title.textContent = rec.name;
+      const body = document.createElement('div');
+      body.className = 'iw';
+      body.innerHTML = `${recPhotoSrc(rec) ? `<div class="iw-photo" style="background-image:url('${esc(recPhotoSrc(rec))}')"></div>` : ''}
+        ${metaHtml}${extraHtml}
+        <div class="actions">${rec.url ? `<a href="${esc(rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a>` : ''}${saveBtnHtml(rec)}</div>
+        ${appButtonsHtml(rec)}`;
+      infoWindow.setHeaderContent(title);
+      infoWindow.setContent(body);
+      infoWindow.open({ map, anchor: marker });
+    }
+
+    // 지도를 장소로 옮긴 뒤(다 움직인 다음) 정보 창 열기
+    function focusOn(pos, done) {
+      if (waitIdle) { waitIdle.remove(); waitIdle = null; }
+      const zoom = 15;
+      const pxToLat = 360 / (256 * Math.pow(2, zoom)) * Math.cos(pos.lat * Math.PI / 180);
+      const target = { lat: pos.lat + $('map').offsetHeight * 0.3 * pxToLat, lng: pos.lng };
+      const c = map.getCenter();
+      if (isNarrow()) window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (Math.abs(map.getZoom() - zoom) < 0.01 && Math.abs(c.lat() - target.lat) < 1e-4 && Math.abs(c.lng() - target.lng) < 1e-4) {
+        done();
+        return;
+      }
+      infoWindow.close();
+      waitIdle = map.addListener('idle', () => { waitIdle.remove(); waitIdle = null; done(); });
+      map.setZoom(zoom);
+      map.panTo(target);
+    }
+
+    function makeMarker(pos, label, color, title, onClick) {
+      const el = document.createElement('div');
+      el.className = 'mk';
+      el.style.background = color;
+      el.textContent = label;
+      const marker = new AdvancedMarkerElement({ map, position: pos, title, content: el, gmpClickable: true });
+      marker.addEventListener('gmp-click', onClick);
+      return marker;
+    }
+
+    function clearCourseLayer() {
+      courseLayer.markers.forEach(m => { if (m) m.map = null; });
+      courseLayer.lines.forEach(l => l.setMap(null));
+      courseLayer = { markers: [], lines: [] };
+    }
+    function clearListLayer() {
+      listLayer.markers.forEach(m => { m.map = null; });
+      listLayer = { markers: [] };
+    }
+
+    // ---------- Google 대중교통 경로 (Routes API · Compute Routes) ----------
+    async function transitRoute(a, b) {
+      const res = await fetch('https://routes.googleapis.com/directions/v2:computeRoutes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': GOOGLE_MAPS_API_KEY,
+          'X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline.geoJsonLinestring,routes.legs.steps.travelMode,routes.legs.steps.transitDetails.transitLine'
+        },
+        body: JSON.stringify({
+          origin: { placeId: a.id },
+          destination: { placeId: b.id },
+          travelMode: 'TRANSIT',
+          polylineEncoding: 'GEO_JSON_LINESTRING',
+          languageCode: LANG_CODE
+        })
+      });
+      if (!res.ok) throw new Error('Routes ' + res.status);
+      const data = await res.json();
+      return data.routes?.[0] || null;
+    }
+
+    function directionsUrl(a, b) {
+      const p = new URLSearchParams({
+        api: '1',
+        origin: a.displayName, origin_place_id: a.id,
+        destination: b.displayName, destination_place_id: b.id,
+        travelmode: 'transit'
+      });
+      return 'https://www.google.com/maps/dir/?' + p.toString();
+    }
+
+    function segHtml(route, a, b) {
+      const link = a && b ? ` · <a href="${esc(directionsUrl(a, b))}" target="_blank" rel="noopener">${T.directions} ↗</a>` : '';
+      if (route === 'loading') return `<span class="loading">${T.routeLoading}</span>`;
+      if (route === 'error') return `<span class="error">${T.routeError}</span>${link}`;
+      if (!route) return `<span class="loading">${T.routeNone}</span>${link}`;
+      const lines = (route.legs?.[0]?.steps || [])
+        .filter(s => s.travelMode === 'TRANSIT' && s.transitDetails?.transitLine)
+        .map(s => s.transitDetails.transitLine)
+        .filter((l, i, all) => i === 0 || (all[i - 1].nameShort || all[i - 1].name) !== (l.nameShort || l.name))
+        .map(l => `<span class="line" style="background:${esc(l.color || '#555')};color:${esc(l.textColor || '#fff')}">${esc(l.nameShort || l.name)}</span>`)
+        .join('');
+      return `
+        <div class="seg-main">🚇 ${fmtDur(parseInt(route.duration, 10))} · ${fmtKm(route.distanceMeters || 0)}</div>
+        ${lines ? `<div class="lines">${lines}</div>` : `<div>${T.walk}</div>`}
+        <a href="${esc(directionsUrl(a, b))}" target="_blank" rel="noopener">${T.directions} ↗</a>`;
+    }
+
+    // ---------- 지역별 사진 코스 카드 ----------
+    let region = 'all';
+
+    function courseCardHtml(c, i) {
+      return `
+        <li>
+          <button type="button" class="course-card" data-course="${i}" style="--c:${c.color}">
+            <div class="cover" style="background-image:url('${esc(photoUrl(c.cover))}')">
+              ${creditHtml(c.cover)}
+              <span class="cover-num en">Course ${String(i + 1).padStart(2, '0')}</span>
+              <h3>${esc(c.name[LANG])}</h3>
+            </div>
+            <div class="card-body">
+              <p>${esc(c.desc[LANG])}</p>
+              <div class="course-meta">
+                <span class="chip">${T.stops(c.stops.length)}</span>
+                <span class="chip">${esc(c.time[LANG])}</span>
+              </div>
+            </div>
+          </button>
+        </li>`;
+    }
+
+    // 지역별로 묶어서: 지역 제목 + 소개 + 그 지역 코스들
+    function renderCourses() {
+      $('regionFilter').innerHTML = Object.entries(REGIONS).map(([key, r]) =>
+        `<button type="button" data-region="${key}" aria-pressed="${key === region}">${esc(r.name[LANG])}</button>`).join('');
+      const keys = Object.keys(REGIONS).filter(k => k !== 'all' && (region === 'all' || region === k));
+      $('courseList').innerHTML = keys.map(key => {
+        const r = REGIONS[key];
+        const cards = COURSES.map((c, i) => c.region === key ? courseCardHtml(c, i) : '').join('');
+        const count = COURSES.filter(c => c.region === key).length;
+        return `
+          <li class="region-sec" data-region="${key}">
+            <div class="region-head">
+              <h3>📍 ${esc(r.name[LANG])} ${LANG !== 'en' ? `<span class="en">${esc(r.name.en)}</span>` : ''}<small>${T.courseCount(count)}</small></h3>
+              <p>${esc(r.intro[LANG])}</p>
+            </div>
+            <ul class="course-list">${cards}</ul>
+          </li>`;
+      }).join('');
+    }
+    renderCourses();
+
+    function showRegionOnMap(key = region) {
+      if (!mapsReady) return;
+      const r = REGIONS[key];
+      if (r.bounds) {
+        map.fitBounds(r.bounds, 0);
+      } else {
+        map.panTo(r.center);
+        map.setZoom(r.zoom);
+      }
+    }
+
+    // ---------- 목록을 스크롤하면 지금 보고 있는 지역으로 지도가 이동 ----------
+    let viewing = 'all';
+    let scrollTicking = false;
+
+    function trackScroll() {
+      scrollTicking = false;
+      if (mode !== 'courses' || region !== 'all' || $('courseListWrap').hidden) return;
+      // 이 선을 지나 위로 올라간 지역 제목 중 마지막 것이 '지금 보는 지역'
+      const line = isNarrow()
+        ? document.querySelector('.map-wrap').getBoundingClientRect().bottom + 80
+        : side.getBoundingClientRect().top + 60;
+      let current = 'all';
+      document.querySelectorAll('.region-sec').forEach(sec => {
+        if (sec.getBoundingClientRect().top <= line) current = sec.dataset.region;
+      });
+      if (current === viewing) return;
+      viewing = current;
+      document.querySelectorAll('#regionFilter button').forEach(b =>
+        b.classList.toggle('viewing', b.dataset.region === current && current !== 'all'));
+      setWeatherRegion(current);
+      showRegionOnMap(current);
+    }
+    function onScroll() {
+      if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(trackScroll); }
+    }
+    side.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // 마지막 지역(제주)의 제목도 위까지 올라올 수 있게 목록 아래에 빈 공간을 둠
+    function sizeListSpace() {
+      const list = $('courseList');
+      const secs = list.querySelectorAll('.region-sec');
+      const last = secs[secs.length - 1];
+      if (region !== 'all' || !last || $('courseListWrap').hidden || mode !== 'courses') { list.style.paddingBottom = ''; return; }
+      const room = isNarrow()
+        ? window.innerHeight - document.querySelector('.map-wrap').offsetHeight - 100
+        : side.clientHeight - 70;
+      list.style.paddingBottom = Math.max(0, room - last.offsetHeight - $('credits').offsetHeight - 24) + 'px';
+    }
+    sizeListSpace();
+    window.addEventListener('resize', sizeListSpace);
+    window.addEventListener('load', sizeListSpace);
+
+    $('regionFilter').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-region]');
+      if (!btn) return;
+      region = btn.dataset.region;
+      viewing = region;
+      renderCourses();
+      sizeListSpace();
+      setWeatherRegion(region);
+      showRegionOnMap();
+    });
+    $('courseList').addEventListener('click', e => {
+      const btn = e.target.closest('.course-card');
+      if (btn) openCourse(Number(btn.dataset.course));
+    });
+
+    // ---------- 코스 열기 ----------
+    let listScroll = null;
+    async function openCourse(ci) {
+      const token = ++courseToken;
+      const course = COURSES[ci];
+      const lang = LANG;
+
+      listScroll = { panel: side.scrollTop, page: window.scrollY };
+      $('courseListWrap').hidden = true;
+      sizeListSpace();
+      setWeatherRegion(course.region);
+      const detail = $('courseDetail');
+      detail.hidden = false;
+      detail.style.setProperty('--course', course.color);
+      detail.innerHTML = `
+        <button type="button" class="back" id="backBtn">${T.back}</button>
+        <div class="detail-cover">
+          <div class="cover" style="--c:${course.color};background-image:url('${esc(photoUrl(course.cover))}')">
+            ${creditHtml(course.cover)}
+            <span class="cover-num en">Course ${String(ci + 1).padStart(2, '0')}</span>
+            <h3>${esc(course.name[lang])}</h3>
+          </div>
+          <div class="card-body">
+            <p>${esc(course.desc[lang])}</p>
+            <div class="course-meta"><span class="chip">📍 ${esc(REGIONS[course.region].name[lang])}</span><span class="chip">${T.stops(course.stops.length)}</span><span class="chip">${esc(course.time[lang])}</span></div>
+            <div class="total" id="totalBox">${T.routeLoading}</div>
+          </div>
+        </div>
+        <ol class="timeline" id="timeline">
+          ${course.stops.map((s, i) => `
+            <li>
+              <button type="button" class="stop-btn" data-stop="${i}">
+                <div class="thumb-col">
+                  <div class="thumb" style="background-image:url('${esc(photoUrl(s.photo))}')"><span class="num">${i + 1}</span></div>
+                  ${creditHtml(s.photo, 'thumb-credit')}
+                </div>
+                <div id="stop${i}"><span class="loading">${T.loading}</span></div>
+              </button>
+            </li>
+            ${i < course.stops.length - 1 ? `<li class="seg" id="seg${i}">${segHtml('loading')}</li>` : ''}`).join('')}
+        </ol>
+        <p class="note">${T.transitNote}</p>`;
+      $('backBtn').addEventListener('click', closeCourse);
+      if (isNarrow()) window.scrollTo({ top: 0 }); else side.scrollTop = 0;
+
+      clearCourseLayer();
+      if (!mapsReady) {
+        $('totalBox').textContent = T.keyText;
+        return;
+      }
+      infoWindow.close();
+
+      // 1) 장소 정보 가져오기
+      const places = await Promise.all(course.stops.map(s => findPlace(s.query).catch(() => null)));
+      if (token !== courseToken) return;
+      const opens = places.map(p => p ? openState(p) : null);
+
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach((place, i) => {
+        const box = $('stop' + i);
+        const stop = course.stops[i];
+        const tipHtml = `<p class="tip"><b>${T.tip}</b>${esc(stop.tip[lang])}</p>`;
+        if (!place) {
+          box.innerHTML = `<span class="error">${T.placeError}</span>${tipHtml}`;
+          courseLayer.markers.push(null);
+          return;
+        }
+        const rec = remember(place, stop.photo);
+        box.innerHTML = `
+          <div class="name-row"><div class="stop-name">${esc(rec.name)}</div>${saveBtnHtml(rec)}</div>
+          ${placeMetaHtml(place, opens[i])}
+          ${distHtml(rec)}
+          ${tipHtml}
+          <div class="actions"><span>⏱ ${T.stay(stop.stay)}</span>
+            <a class="gmap-link" href="${esc(rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a></div>
+          ${appButtonsHtml(rec)}`;
+        const show = () => {
+          highlightStop(i);
+          openInfo(courseLayer.markers[i], rec, placeMetaHtml(place, opens[i]), tipHtml);
+        };
+        const marker = makeMarker(place.location, String(i + 1), course.color, rec.name, show);
+        marker.zIndex = 10;
+        courseLayer.markers.push(marker);
+        bounds.extend(place.location);
+        box.closest('.stop-btn').onclick = () => focusOn(rec, show);
+      });
+      if (!bounds.isEmpty()) map.fitBounds(bounds, 70);
+
+      // 2) 장소 사이 대중교통 경로 가져오기
+      let total = 0, missing = false;
+      await Promise.all(places.slice(0, -1).map(async (a, i) => {
+        const b = places[i + 1];
+        const segEl = $('seg' + i);
+        if (!a || !b) { segEl.innerHTML = segHtml('error'); missing = true; return; }
+        let route;
+        try { route = await transitRoute(a, b); } catch (e) { route = 'error'; }
+        if (token !== courseToken) return;
+        segEl.innerHTML = segHtml(route, a, b);
+        if (!route || route === 'error') { missing = true; return; }
+        total += parseInt(route.duration, 10);
+        const coords = route.polyline?.geoJsonLinestring?.coordinates || [];
+        const line = new google.maps.Polyline({
+          map: mode === 'courses' ? map : null,
+          path: coords.map(([lng, lat]) => ({ lat, lng })),
+          strokeColor: course.color,
+          strokeOpacity: 0.85,
+          strokeWeight: 5
+        });
+        courseLayer.lines.push(line);
+      }));
+      if (token !== courseToken) return;
+      $('totalBox').innerHTML = total
+        ? `🚇 ${T.total}: <b>${fmtDur(total)}</b>${missing ? ` · ${T.totalPartial}` : ''}`
+        : T.totalPartial;
+    }
+
+    function highlightStop(i) {
+      document.querySelectorAll('.stop-btn').forEach((b, j) => b.classList.toggle('active', i === j));
+      courseLayer.markers.forEach((m, j) => { if (m) m.content.classList.toggle('active', i === j); });
+    }
+
+    // 코스를 닫으면 보던 목록 위치로 돌아가고, 지도도 그 지역으로
+    function closeCourse() {
+      courseToken++;
+      clearCourseLayer();
+      if (mapsReady) infoWindow.close();
+      $('courseDetail').hidden = true;
+      $('courseListWrap').hidden = false;
+      sizeListSpace();
+      if (listScroll) {
+        side.scrollTop = listScroll.panel;
+        if (isNarrow()) window.scrollTo(0, listScroll.page);
+      }
+      if (region === 'all') {
+        viewing = null;
+        trackScroll();
+      } else {
+        setWeatherRegion(region);
+        showRegionOnMap();
+      }
+    }
+
+    // ---------- 목록 화면 (주변 찾기 · 검색 · 내 여행) ----------
+    function startList(title, hint, statusHtml) {
+      const token = ++listToken;
+      $('listTitle').textContent = title;
+      $('listHint').textContent = hint;
+      $('listStatus').innerHTML = statusHtml || '';
+      $('resultList').innerHTML = '';
+      $('catBanner').hidden = true;
+      clearListLayer();
+      if (mapsReady) infoWindow.close();
+      if (isNarrow()) window.scrollTo({ top: 0 }); else side.scrollTop = 0;
+      return token;
+    }
+
+    // Google 장소 목록을 카드 + 마커로 그리기
+    function renderPlaces(places, color, iconKey) {
+      const list = $('resultList');
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach((place, i) => {
+        const rec = remember(place, undefined, iconKey === 'attraction');
+        const open = openState(place);
+        const letter = String.fromCharCode(65 + i);
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <button type="button" class="result-btn" style="--course:${color}">
+            <div class="thumb-col">${thumbHtml(rec, letter, color, iconKey)}</div>
+            <div>
+              <div class="name-row"><div class="stop-name">${esc(rec.name)}</div>${saveBtnHtml(rec)}</div>
+              ${placeMetaHtml(place, open)}
+              ${distHtml(rec)}
+              <div class="actions"><a class="gmap-link" href="${esc(rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a></div>
+              ${appButtonsHtml(rec)}
+            </div>
+          </button>`;
+        list.appendChild(li);
+        // 관광명소인데 사진이 없으면 Wikimedia Commons에서 그 장소 사진을 찾아 채우기
+        if (iconKey === 'attraction' && !rec.photo && !rec.gphoto) {
+          commonsPhoto(rec.name, rec.lat, rec.lng).then(ph => {
+            if (!ph || !li.isConnected) return;
+            rec.wphoto = ph;
+            li.querySelector('.thumb-col').innerHTML = thumbHtml(rec, letter, color, iconKey);
+          });
+        }
+        const show = () => {
+          list.querySelectorAll('.result-btn').forEach((b, j) => b.classList.toggle('active', i === j));
+          listLayer.markers.forEach((m, j) => m.content.classList.toggle('active', i === j));
+          openInfo(listLayer.markers[i], rec, placeMetaHtml(place, open));
+        };
+        listLayer.markers.push(makeMarker(place.location, letter, color, rec.name, show));
+        bounds.extend(place.location);
+        li.querySelector('button').addEventListener('click', () => focusOn(rec, show));
+      });
+      return bounds;
+    }
+
+    // 주변 찾기 (Google Places · Nearby Search)
+    let nearbyCat = null;
+    async function runNearby(catKey) {
+      const cat = CATS.find(c => c.key === catKey);
+      nearbyCat = catKey;
+      setMode(catKey);
+      const token = startList(T.nearbyTitle(T.cats[catKey]), T.nearbyHint, `<p class="loading">${T.searching}</p>`);
+
+      // 목록 위 분위기 사진 띠 ("예시 사진" 표시 + 출처)
+      const bp = CAT_PHOTOS[catKey];
+      if (bp) {
+        const banner = $('catBanner');
+        banner.style.backgroundImage = `url('${bp.src}')`;
+        banner.title = T.exampleTip;
+        banner.innerHTML = `
+          <span class="example-tag" title="${esc(T.exampleTip)}">${esc(T.examplePhoto)}</span>
+          <a class="credit" href="${esc(bp.page)}" target="_blank" rel="noopener" title="${esc(bp.by)} · ${esc(bp.lic)}">📷 ${esc(bp.by)}</a>
+          <h2>${svg(ICON[catKey], 26)}${esc(T.cats[catKey])}</h2>`;
+        banner.hidden = false;
+      }
+      if (!mapsReady) { $('listStatus').innerHTML = `<p class="error">${T.keyText}</p>`; return; }
+
+      // 지도가 너무 넓게 보이면(나라 전체) 먼저 지금 지역으로 확대
+      if (map.getZoom() < 11) {
+        const key = viewing && viewing !== 'all' ? viewing : 'seoul';
+        map.setCenter(REGIONS[key].center);
+        map.setZoom(14);
+        await new Promise(r => google.maps.event.addListenerOnce(map, 'idle', r));
+      }
+      const center = map.getCenter();
+      const ne = map.getBounds().getNorthEast();
+      // 날씨 카드도 가장 가까운 지역으로 (60km 안)
+      const nearest = Object.keys(PLAN_DAYS)
+        .map(k => ({ k, km: kmBetween(center.toJSON(), REGIONS[k].center) }))
+        .sort((a, b) => a.km - b.km)[0];
+      if (nearest.km < 60) setWeatherRegion(nearest.k);
+      const radius = Math.min(5000, Math.max(800, kmBetween(center.toJSON(), ne.toJSON()) * 1000 * 0.8));
+
+      let places;
+      try {
+        ({ places } = await Place.searchNearby({
+          fields: PLACE_FIELDS,
+          locationRestriction: { center, radius },
+          includedPrimaryTypes: [cat.type],
+          maxResultCount: 15,
+          language: LANG_CODE,
+          region: 'kr'
+        }));
+      } catch (e) {
+        if (token === listToken) $('listStatus').innerHTML = `<p class="error">${T.searchError}</p>`;
+        return;
+      }
+      if (token !== listToken) return;
+      if (!places.length) { $('listStatus').innerHTML = `<p class="loading">${T.nearbyEmpty}</p>`; return; }
+      $('listStatus').innerHTML = '';
+      const bounds = renderPlaces(places, cat.color, catKey);
+      // 찾은 장소가 모두 지도 안에 보이도록
+      if (places.length > 1) map.fitBounds(bounds, 60);
+      $('researchBtn').hidden = true;
+    }
+    $('researchBtn').addEventListener('click', () => { if (nearbyCat) runNearby(nearbyCat); });
+
+    // 장소 검색 (Google Places · Text Search)
+    $('searchForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const q = $('searchInput').value.trim();
+      if (q) runSearch(q);
+    });
+    async function runSearch(q) {
+      setMode('search');
+      const token = startList(T.searchTitle(q), T.searchHint, `<p class="loading">${T.searching}</p>`);
+      if (!mapsReady) { $('listStatus').innerHTML = `<p class="error">${T.keyText}</p>`; return; }
+      let places;
+      try {
+        ({ places } = await Place.searchByText({
+          textQuery: q,
+          fields: PLACE_FIELDS,
+          language: LANG_CODE,
+          region: 'kr',
+          maxResultCount: 10,
+          locationRestriction: KOREA_BOUNDS
+        }));
+      } catch (e) {
+        if (token === listToken) $('listStatus').innerHTML = `<p class="error">${T.searchError}</p>`;
+        return;
+      }
+      if (token !== listToken) return;
+      if (!places.length) { $('listStatus').innerHTML = `<p class="loading">${T.searchEmpty}</p>`; return; }
+      $('listStatus').innerHTML = '';
+      const bounds = renderPlaces(places, '#3d6af2', 'attraction');
+      if (places.length === 1) { map.setCenter(places[0].location); map.setZoom(14); }
+      else map.fitBounds(bounds, 70);
+    }
+
+    // 내 여행 (찜한 장소)
+    function showMine() {
+      setMode('mine');
+      startList(T.mineTitle, T.mineHint, saved.length ? '' : `<p class="loading">${T.mineEmpty}</p>`);
+      if (!saved.length) return;
+      const list = $('resultList');
+      const bounds = mapsReady ? new google.maps.LatLngBounds() : null;
+      saved.forEach((rec, i) => {
+        placeIndex.set(rec.id, rec);
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <button type="button" class="result-btn" style="--course:#ff6b6b">
+            <div class="thumb-col">${thumbHtml(rec, i + 1, '#ff6b6b', rec.kind || 'mine')}</div>
+            <div>
+              <div class="name-row"><div class="stop-name">${esc(rec.name)}</div>${saveBtnHtml(rec)}</div>
+              <div class="addr">${esc(rec.address)}</div>
+              ${distHtml(rec)}
+              <div class="actions">${rec.url ? `<a class="gmap-link" href="${esc(rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a>` : ''}</div>
+              ${appButtonsHtml(rec)}
+            </div>
+          </button>`;
+        list.appendChild(li);
+        if (!mapsReady) return;
+        const pos = { lat: rec.lat, lng: rec.lng };
+        const show = () => {
+          list.querySelectorAll('.result-btn').forEach((b, j) => b.classList.toggle('active', i === j));
+          listLayer.markers.forEach((m, j) => m.content.classList.toggle('active', i === j));
+          openInfo(listLayer.markers[i], rec, `<div class="addr">${esc(rec.address)}</div>`);
+        };
+        listLayer.markers.push(makeMarker(pos, String(i + 1), '#ff6b6b', rec.name, show));
+        bounds.extend(pos);
+        li.querySelector('button').addEventListener('click', () => focusOn(rec, show));
+      });
+      if (bounds && !bounds.isEmpty()) {
+        if (saved.length === 1) { map.setCenter(bounds.getCenter()); map.setZoom(14); }
+        else map.fitBounds(bounds, 70);
+      }
+    }
+
+    // ---------- 자동 추천 일정 ----------
+    // 지니맵 명소(하루 3곳) 사이사이에 Google에서 찾은 근처 인기 음식점·카페를 넣어 날짜별 일정을 만들어요.
+    const DAY_COLORS = ['#3d6af2', '#12b5a0', '#f59e0b'];
+    const KIND_COLORS = { sight: '#3d6af2', restaurant: '#f0544f', cafe: '#b7791f' };
+    const KIND_ICON = { sight: 'attraction', restaurant: 'restaurant', cafe: 'cafe' };
+    let plan = null;      // { region, len, days: [[항목, …], …] }
+    let planDay = 0;
+    let planLayer = { markers: [], lines: [] };
+    let planToken = 0;
+    let planRegion = null, planLen = 1;
+    const routeCache = new Map();
+
+    function showPlanner() {
+      if (!planRegion) planRegion = viewing && viewing !== 'all' ? viewing : 'seoul';
+      setMode('planner');
+      renderPlanForm();
+      $('planForm').hidden = !!plan;
+      $('planResult').hidden = !plan;
+      if (plan) setWeatherRegion(plan.region);
+      if (isNarrow()) window.scrollTo({ top: 0 }); else side.scrollTop = 0;
+    }
+    $('planCta').addEventListener('click', showPlanner);
+
+    function renderPlanForm() {
+      $('planRegion').innerHTML = Object.keys(PLAN_DAYS).map(k =>
+        `<button type="button" data-v="${k}" aria-pressed="${k === planRegion}">${esc(REGIONS[k].name[LANG])}</button>`).join('');
+      $('planLength').innerHTML = T.lengths.map((t, i) =>
+        `<button type="button" data-v="${i}" aria-pressed="${i === planLen}">${esc(t)}</button>`).join('');
+    }
+    $('planRegion').addEventListener('click', e => {
+      const b = e.target.closest('button[data-v]');
+      if (!b) return;
+      planRegion = b.dataset.v;
+      renderPlanForm();
+      setWeatherRegion(planRegion);
+      showRegionOnMap(planRegion);
+    });
+    $('planLength').addEventListener('click', e => {
+      const b = e.target.closest('button[data-v]');
+      if (!b) return;
+      planLen = Number(b.dataset.v);
+      renderPlanForm();
+    });
+    $('makePlanBtn').addEventListener('click', buildPlan);
+
+    // 명소 근처에서 평점·리뷰 수가 좋은 곳 하나 고르기 (이미 고른 곳은 빼고)
+    const placeScore = p => (p.rating || 0) * Math.log10((p.userRatingCount || 0) + 10);
+    async function nearbyBest(location, type, usedIds) {
+      for (const radius of [700, 2000]) {
+        let places = [];
+        try {
+          ({ places } = await Place.searchNearby({
+            fields: PLACE_FIELDS,
+            locationRestriction: { center: location, radius },
+            includedPrimaryTypes: [type],
+            maxResultCount: 12,
+            language: LANG_CODE,
+            region: 'kr'
+          }));
+        } catch (e) { return null; }
+        const ok = places.filter(p => !usedIds.has(p.id) && p.rating && (!p.businessStatus || p.businessStatus === 'OPERATIONAL'));
+        const good = ok.filter(p => p.rating >= 4.0); // 평점 4.0 이상을 먼저
+        const pool = good.length ? good : ok;
+        if (pool.length) return pool.sort((a, b) => placeScore(b) - placeScore(a))[0];
+      }
+      return null;
+    }
+
+    async function buildPlan() {
+      if (!mapsReady) { $('planStatus').innerHTML = `<p class="error">${T.keyText}</p>`; return; }
+      const token = ++planToken;
+      const btn = $('makePlanBtn');
+      btn.disabled = true;
+      $('planStatus').innerHTML = `<p class="loading">${T.planning}</p>`;
+      setWeatherRegion(planRegion);
+
+      const region = planRegion, len = planLen;
+      const dayKeys = PLAN_DAYS[region].slice(0, len + 1);
+      // 1) 명소 정보 (Google Places)
+      const sights = await Promise.all(dayKeys.map(keys =>
+        Promise.all(keys.map(k => findPlace(spotInfo(k).query).catch(() => null)))));
+      const used = new Set(sights.flat().filter(Boolean).map(p => p.id));
+
+      // 2) 명소 근처 점심 · 카페 · 저녁 (Google Places Nearby Search)
+      const days = [];
+      for (let d = 0; d < dayKeys.length; d++) {
+        const [k1, k2, k3] = dayKeys[d];
+        const [s1, s2, s3] = sights[d];
+        const pick = async (s, type) => {
+          if (!s) return null;
+          const p = await nearbyBest(s.location, type, used);
+          if (p) used.add(p.id);
+          return p;
+        };
+        const lunch = await pick(s1, 'restaurant');
+        const cafe = await pick(s2, 'cafe');
+        const dinner = await pick(s3, 'restaurant');
+        if (token !== planToken) return;
+        days.push([
+          { kind: 'sight', key: k1, place: s1 },
+          { kind: 'restaurant', meal: 'lunch', place: lunch },
+          { kind: 'sight', key: k2, place: s2 },
+          { kind: 'cafe', meal: 'cafe', place: cafe },
+          { kind: 'sight', key: k3, place: s3 },
+          { kind: 'restaurant', meal: 'dinner', place: dinner }
+        ].filter(it => it.kind === 'sight' || it.place).map(it => {
+          if (it.place) {
+            it.rec = remember(it.place, it.kind === 'sight' ? it.key : undefined);
+            it.rec.kind = KIND_ICON[it.kind];
+          }
+          return it;
+        }));
+      }
+      if (token !== planToken) return;
+      btn.disabled = false;
+      $('planStatus').innerHTML = '';
+      plan = { region, len, days };
+      planDay = 0;
+      renderPlanResult();
+      drawPlanLayer();
+      selectDay(0);
+    }
+
+    function renderPlanResult() {
+      const all = plan.days.flat().filter(it => it.rec);
+      const count = k => all.filter(it => it.kind === k).length;
+      let dist = 0;
+      plan.days.forEach(day => {
+        const recs = day.filter(it => it.rec).map(it => it.rec);
+        for (let i = 1; i < recs.length; i++) dist += kmBetween(recs[i - 1], recs[i]);
+      });
+      const rName = REGIONS[plan.region].name[LANG];
+      $('planResult').innerHTML = `
+        <div class="plan-summary">
+          <h3>📍 ${esc(T.planFor(rName, T.lengths[plan.len]))}</h3>
+          <div class="stats">
+            <div class="plan-badge">${esc(T.lengthShort[plan.len])}</div>
+            <ul>
+              <li>${esc(T.planCount(all.length, count('sight'), count('restaurant'), count('cafe')))}</li>
+              <li>${esc(T.planArea(rName))}</li>
+              <li>${esc(T.planDist(Math.round(dist) + ' km'))}</li>
+            </ul>
+          </div>
+          <button type="button" class="link-btn" id="remakeBtn">${T.remake}</button>
+        </div>
+        <div class="day-bar">
+          ${plan.days.map((_, d) => `<button type="button" class="day-tab" data-day="${d}" aria-pressed="${d === planDay}">${esc(T.dayN(d + 1))}</button>`).join('')}
+          <button type="button" class="parking-btn" id="parkingBtn"><span class="cat-ico" style="width:24px;height:24px;border:0;color:#475569">${svg(ICON.parking, 18)}</span>${T.nearParking}</button>
+        </div>
+        <div id="planDayList"></div>
+        <p class="note">${T.planNote}</p>`;
+      $('planForm').hidden = true;
+      $('planResult').hidden = false;
+      $('remakeBtn').addEventListener('click', () => { $('planForm').hidden = false; $('planResult').hidden = true; renderPlanForm(); });
+      $('planResult').querySelector('.day-bar').addEventListener('click', e => {
+        const b = e.target.closest('.day-tab');
+        if (b) selectDay(Number(b.dataset.day));
+      });
+      $('parkingBtn').addEventListener('click', async () => {
+        // 그날 가운데 명소 근처 주차장 찾기
+        const mid = plan.days[planDay].filter(it => it.rec)[Math.floor(plan.days[planDay].length / 2)] || plan.days[planDay].find(it => it.rec);
+        if (!mid) return;
+        map.setCenter({ lat: mid.rec.lat, lng: mid.rec.lng });
+        map.setZoom(15);
+        await new Promise(r => google.maps.event.addListenerOnce(map, 'idle', r));
+        runNearby('parking');
+      });
+      // 지도 위 날짜 안내표
+      $('planLegend').innerHTML = plan.days.map((_, d) =>
+        `<span style="color:${DAY_COLORS[d]}"><i style="--d:${DAY_COLORS[d]};border-top-style:${['solid', 'dashed', 'dotted'][d]}"></i>${esc(T.dayN(d + 1))}</span>`).join('');
+      $('planLegend').hidden = mode !== 'planner';
+    }
+
+    // 날짜별 선 모양: 1일차 실선 · 2일차 점선 · 3일차 동그라미 점선
+    function lineOptions(d, active) {
+      const color = DAY_COLORS[d], op = active ? 1 : 0.3;
+      if (d === 0) return { strokeColor: color, strokeOpacity: 0.9 * op, strokeWeight: 4, icons: [] };
+      if (d === 1) return { strokeOpacity: 0, icons: [{ icon: { path: 'M 0,-1 0,1', strokeColor: color, strokeOpacity: op, strokeWeight: 4, scale: 3 }, offset: '0', repeat: '14px' }] };
+      return { strokeOpacity: 0, icons: [{ icon: { path: google.maps.SymbolPath.CIRCLE, fillColor: color, fillOpacity: op, strokeOpacity: 0, scale: 3 }, offset: '0', repeat: '11px' }] };
+    }
+
+    function drawPlanLayer() {
+      planLayer.markers.flat().forEach(m => { m.map = null; });
+      planLayer.lines.forEach(l => l.setMap(null));
+      planLayer = { markers: [], lines: [] };
+      plan.days.forEach((day, d) => {
+        const items = day.filter(it => it.rec);
+        planLayer.markers.push(items.map((it, i) => makeMarker({ lat: it.rec.lat, lng: it.rec.lng }, String(i + 1), DAY_COLORS[d], it.rec.name, () => {
+          if (planDay !== d) selectDay(d, false);
+          openPlanItem(d, i);
+        })));
+        planLayer.lines.push(new google.maps.Polyline({ map, path: items.map(it => ({ lat: it.rec.lat, lng: it.rec.lng })), zIndex: d === planDay ? 5 : 1, ...lineOptions(d, true) }));
+      });
+    }
+
+    function showPlanLayer(visible) {
+      if (!plan) return;
+      planLayer.markers.flat().forEach(m => { m.map = visible ? map : null; });
+      planLayer.lines.forEach(l => l.setMap(visible ? map : null));
+      $('planLegend').hidden = !visible;
+    }
+
+    function openPlanItem(d, i) {
+      const it = plan.days[d].filter(x => x.rec)[i];
+      document.querySelectorAll('#planDayList .stop-btn').forEach(b => b.classList.toggle('active', b.dataset.rid === it.rec.id));
+      planLayer.markers[d].forEach((m, j) => m.content.classList.toggle('active', i === j));
+      const tip = it.kind === 'sight' ? `<p class="tip"><b>${T.tip}</b>${esc(spotInfo(it.key).tip[LANG])}</p>` : '';
+      openInfo(planLayer.markers[d][i], it.rec, placeMetaHtml(it.place, openState(it.place)), tip);
+    }
+
+    function selectDay(d, fit = true) {
+      planDay = d;
+      document.querySelectorAll('.day-tab').forEach(b => b.setAttribute('aria-pressed', Number(b.dataset.day) === d));
+      const day = plan.days[d];
+      const color = DAY_COLORS[d];
+      let n = 0;
+      $('planDayList').innerHTML = `
+        <h3 class="day-head" style="color:${color}">Day ${d + 1}</h3>
+        <ol class="timeline" style="--course:${color}">
+          ${day.map((it, idx) => {
+            const kc = KIND_COLORS[it.kind];
+            const kindTag = `<span class="kind" style="--k:${kc}">${esc(T.kinds[it.kind])}${it.meal ? `<small>${esc(T.meals[it.meal])}</small>` : ''}</span>`;
+            if (!it.rec) {
+              return `<li><div class="stop-btn" style="cursor:default"><div class="thumb-col">${thumbHtml({ photo: it.key }, '·', kc, KIND_ICON[it.kind])}</div><div>${kindTag}<p class="error">${T.placeError}</p></div></div></li>`;
+            }
+            const num = ++n;
+            const spot = it.kind === 'sight' ? spotInfo(it.key) : null;
+            const next = day.slice(idx + 1).find(x => x.rec);
+            return `
+              <li>
+                <button type="button" class="stop-btn" data-rid="${esc(it.rec.id)}" data-i="${num - 1}">
+                  <div class="thumb-col">${thumbHtml(it.rec, num, kc, KIND_ICON[it.kind])}</div>
+                  <div>
+                    ${kindTag}
+                    <div class="name-row"><div class="stop-name">${esc(it.rec.name)}</div>${saveBtnHtml(it.rec)}</div>
+                    ${placeMetaHtml(it.place, openState(it.place))}
+                    ${distHtml(it.rec)}
+                    ${spot ? `<p class="tip"><b>${T.tip}</b>${esc(spot.tip[LANG])}</p>` : ''}
+                    <div class="actions">${spot ? `<span>⏱ ${T.stay(spot.stay)}</span>` : ''}
+                      <a class="gmap-link" href="${esc(it.rec.url)}" target="_blank" rel="noopener">${T.openGoogle} ↗</a></div>
+                    ${appButtonsHtml(it.rec)}
+                  </div>
+                </button>
+              </li>
+              ${next ? `<li class="seg-mini" data-from="${esc(it.rec.id)}" data-to="${esc(next.rec.id)}"><span class="loading">${T.routeLoading}</span></li>` : ''}`;
+          }).join('')}
+        </ol>`;
+      $('planDayList').querySelectorAll('.stop-btn[data-rid]').forEach(b => {
+        const i = Number(b.dataset.i);
+        const it = day.filter(x => x.rec)[i];
+        b.addEventListener('click', () => focusOn(it.rec, () => openPlanItem(d, i)));
+      });
+
+      // 지도: 고른 날은 진하게, 다른 날은 흐리게
+      if (mapsReady) {
+        planLayer.markers.forEach((ms, j) => ms.forEach(m => { m.content.style.opacity = j === d ? 1 : 0.4; m.zIndex = j === d ? 10 : 1; }));
+        planLayer.lines.forEach((l, j) => l.setOptions({ ...lineOptions(j, j === d), zIndex: j === d ? 5 : 1 }));
+        if (fit) {
+          infoWindow.close();
+          const b = new google.maps.LatLngBounds();
+          day.filter(it => it.rec).forEach(it => b.extend({ lat: it.rec.lat, lng: it.rec.lng }));
+          if (!b.isEmpty()) map.fitBounds(b, 70);
+        }
+      }
+
+      // 고른 날의 장소 사이 대중교통 시간 (Google Compute Routes)
+      const byId = id => day.find(x => x.rec && x.rec.id === id);
+      $('planDayList').querySelectorAll('.seg-mini').forEach(async el => {
+        const a = byId(el.dataset.from), b = byId(el.dataset.to);
+        const key = el.dataset.from + '>' + el.dataset.to;
+        if (!routeCache.has(key)) routeCache.set(key, transitRoute(a.place, b.place).catch(() => 'error'));
+        const route = await routeCache.get(key);
+        const link = `<a href="${esc(directionsUrl(a.place, b.place))}" target="_blank" rel="noopener">${T.directions} ↗</a>`;
+        el.innerHTML = route && route !== 'error'
+          ? `🚇 ${fmtDur(parseInt(route.duration, 10))} · ${fmtKm(route.distanceMeters || 0)} · ${link}`
+          : `${route === 'error' ? T.routeError : T.routeNone} · ${link}`;
+      });
+    }
+
+    // ---------- 내 위치 ----------
+    $('locateBtn').addEventListener('click', () => {
+      if (!navigator.geolocation) { toast(T.locError); return; }
+      navigator.geolocation.getCurrentPosition(pos => {
+        myPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        updateDistances();
+        if (!mapsReady) return;
+        if (myMarker) myMarker.map = null;
+        const dot = document.createElement('div');
+        dot.className = 'me-dot';
+        myMarker = new AdvancedMarkerElement({ map, position: myPos, content: dot, title: T.myLocation, zIndex: 20 });
+        map.panTo(myPos);
+        if (map.getZoom() < 13) map.setZoom(14);
+      }, () => toast(T.locError), { enableHighAccuracy: true, timeout: 10000 });
+    });
+
+    // ---------- Google 지도 시작 ----------
+    async function initMap() {
+      const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+      ({ AdvancedMarkerElement } = await google.maps.importLibrary('marker'));
+      ({ Place } = await google.maps.importLibrary('places'));
+
+      map = new Map($('map'), {
+        center: REGIONS.all.center,
+        zoom: REGIONS.all.zoom,
+        mapId: 'DEMO_MAP_ID', // 고급 마커를 쓰려면 꼭 필요한 값
+        renderingType: google.maps.RenderingType.VECTOR,
+        isFractionalZoomEnabled: true, // 6.5단계처럼 중간 크기로도 확대 → 한국이 지도 칸에 꽉 차게
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: true
+      });
+      infoWindow = new InfoWindow({ maxWidth: 320 });
+      mapsReady = true;
+      showRegionOnMap();
+
+      // 주변 찾기 화면에서 지도를 옮기면 "이 지역에서 다시 찾기" 버튼 보이기
+      map.addListener('dragend', () => {
+        if (nearbyCat && mode === nearbyCat) $('researchBtn').hidden = false;
+      });
+    }
+
+    // API 키가 틀렸거나 사용할 수 없을 때 Google이 부르는 함수
+    window.gm_authFailure = () => {
+      mapsReady = false;
+      showMapMsg(T.authTitle, T.authText);
+    };
+
+    if (GOOGLE_MAPS_API_KEY.includes('YOUR_')) {
+      showMapMsg(T.keyTitle, T.keyText);
+    } else {
+      // Google 공식 로딩 방식 (Dynamic Library Import)
+      (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+        key: GOOGLE_MAPS_API_KEY,
+        v: 'weekly',
+        language: LANG_CODE,
+        region: 'KR'
+      });
+
+      initMap().catch(() => showMapMsg(T.authTitle, T.loadText));
+    }
+  </script>
+</body>
+</html>
